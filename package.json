@@ -1,6 +1,6 @@
 {
   "name": "pioneerjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "pioneerjs - a puppeteer framework",
   "main": "./dist/index.js",
   "scripts": {
