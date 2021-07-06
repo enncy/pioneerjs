@@ -5,7 +5,7 @@ import { InjectableScriptLoader } from "./Injectable";
 import 'reflect-metadata';
 import { Script, ScriptConstructor } from "../core/script/Script";
 
-const injectPool = new Array<{ targetConstructor: Function, propertyKey: string, scriptConstructor: ScriptConstructor<Script> | undefined }>()
+const injectPool = new Array<{ target: RunnableScript, propertyKey: string, scriptConstructor: ScriptConstructor<Script> | undefined }>()
 
 /**
   * inject InjectableScript to RunnableScript,   
@@ -35,9 +35,10 @@ export function Inject(target: RunnableScript, propertyKey: string) {
     // get propertyKey type
     const metadata = Reflect.getMetadata("design:type", target, propertyKey)
     // get InjectableScript  constructor
+
     const scriptConstructor = InjectableScriptLoader.getScriptConstructor(metadata)
     // save in pool
-    injectPool.push({ targetConstructor: target.constructor, scriptConstructor, propertyKey })
+    injectPool.push({ target, scriptConstructor, propertyKey })
 }
 
 export class InjectPool {

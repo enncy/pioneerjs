@@ -1,15 +1,34 @@
 {
   "name": "pioneerjs",
   "version": "1.0.0",
-  "description": "",
+  "description": "pioneerjs - a puppeteer framework",
   "main": "./dist/index.js",
   "scripts": {
     "test": "node ./dist/index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "enncy",
+  "license": "Apache-2.0",
   "dependencies": {
     "puppeteer-core": "^10.1.0",
     "reflect-metadata": "^0.1.13"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enncy/pioneerjs.git"
+  },
+  "keywords": [
+    "puppeteer",
+    "pioneer",
+    "framework",
+    "typescript",
+    "chrome"
+  ],
+  "bugs": {
+    "url": "https://github.com/enncy/pioneerjs/issues"
+  },
+  "homepage": "https://github.com/enncy/pioneerjs#readme"
 }

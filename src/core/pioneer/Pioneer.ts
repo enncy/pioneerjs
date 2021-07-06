@@ -8,24 +8,40 @@ import { ScriptFactory } from "../script/ScriptFactory";
 import { ScriptConstructor } from "../script/Script";
 import { RunnableScript } from "../script/RunnableScript";
 import { InjectPool } from "../../decorator/Inject";
+import { InjectableScript } from "../script/InjectableScript";
+
 
 
 
 
 /**
  * the appliaction starter
+ * 
  */
 export class Pioneer {
 
     private browser: Browser
     private options: PioneerOptioins
-    
+
     constructor(browser: Browser, options: PioneerOptioins) {
         this.browser = browser
         this.options = options
+
+        // create pages 
         this.initPages((pages) => {
+            // init runnable script
             const runnableScripts = this.initRunnableScript(pages)
-            this.initInjectableScript(runnableScripts)
+
+            // init injectable script
+            const injectableScripts = this.initInjectableScript()
+            // start script
+            for (const script of runnableScripts) {
+                script.startup()
+                console.log(`[pioneer]:script running - ${script.name}`);
+            }
+            for (const script of injectableScripts) {
+                console.log(`[pioneer]:script injected - ${script.name}`);
+            }
         })
     }
 
@@ -44,7 +60,6 @@ export class Pioneer {
                 const name = Reflect.getMetadata("name", constructor)
                 const script = ScriptFactory.createScript(constructor, { name, page, browser: this.browser, context })
                 // startup
-                script.startup()
                 scripts.push(script)
             }
         }
@@ -55,22 +70,28 @@ export class Pioneer {
      * init injectable script
      * @see initScript()
      */
-    private initInjectableScript(runnableScripts: RunnableScript[]) {
+    private initInjectableScript(): InjectableScript[] {
+        const scripts: InjectableScript[] = []
         // inject script
         for (const inject of InjectPool.getInjectPool()) {
-            const target = ScriptFactory.getScript(inject.targetConstructor.name)
+
+            const target = ScriptFactory.getScript(inject.target.constructor)
+
             if (target) {
                 const { page, browser, context } = target
                 if (inject.scriptConstructor) {
-                    const name = Reflect.getMetadata("name", inject.targetConstructor)
-                    const script = new inject.scriptConstructor({ name, page, browser, context })
+                    // get script name
+                    const name = Reflect.getMetadata("name", inject.scriptConstructor)
+                    // create script
+                    const script = ScriptFactory.createScript(inject.scriptConstructor, { name, page, browser, context })
+                    // inject
                     Reflect.set(target, inject.propertyKey, script)
+                    scripts.push(script)
                 }
             }
         }
-
+        return scripts
     }
-
 
     /** create pages  */
     private async initPages(callback: (pages: Page[]) => void): Promise<Page[]> {

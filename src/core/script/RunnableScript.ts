@@ -1,5 +1,7 @@
-
+ 
+import { WaitForScript } from "../utils/WaitForScript";
 import { InjectableScript } from "./InjectableScript";
+import { ScriptFactory } from "./ScriptFactory";
 
 /**
  * runnable script , use @Runnable to decorator   
@@ -20,25 +22,41 @@ export abstract class RunnableScript extends InjectableScript {
 
     /** called when browser page created*/
     startup(): void {
-        // update
-        this.page.once('load', () => this.run())
-        //destroyed
-        this.page.once('close', () => this.destroyed())
+        (async () => {
+            // listening destroyed
+            this.page.once('close', () => this.destroyed())
 
-        // goto the @Runnable's url value
-        if (this.url) {
-            this.page.goto(this.url)
-        }
-        //callback
-        this.created()
+            if (this.url && this.url !== '') {
+                // listening load
+                this.page.once('load', () => this.run())
+                // goto the @Runnable's url value
+                await this.page.goto(this.url)
+
+            } else {
+                this.run()
+            }
+            //callback
+            this.created()
+
+            // listening document update
+            this.page.on('request', async req => {
+                if(req.resourceType() === 'document'){
+                    const waitFor = ScriptFactory.getScript(WaitForScript)     
+                    waitFor?.nextTick('request',()=>{
+                        this.update()
+                    })
+                }
+            })
+        })()
+
     }
 
     /** called when the {@link run()} function is called*/
-    created(): void { }
+    async created(): Promise<void> { }
     /** called when the window load  */
     abstract run(): Promise<void>
     /** called when browser page destroyed*/
-    update(): void { }
+    async update(): Promise<void> { }
     /** called when browser page destroyed*/
-    destroyed(): void { }
+    async destroyed(): Promise<void> { }
 }

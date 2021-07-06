@@ -4,10 +4,13 @@ import 'reflect-metadata';
 
 const injectableScriptConstructors: ScriptConstructor<InjectableScript>[] = []
 
-
-export function Injectable(name?: string) {
+/**
+ * Injectable decorator, use in  InjectableScript
+ * @see InjectableScript
+ */
+export function Injectable() {
     return function (constructor: ScriptConstructor<InjectableScript>) {
-        Reflect.defineMetadata("name", name || constructor.name, constructor)
+        Reflect.defineMetadata("name",constructor.name, constructor)
         injectableScriptConstructors.push(constructor)
     }
 }

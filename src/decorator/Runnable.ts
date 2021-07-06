@@ -4,8 +4,12 @@ import { ScriptConstructor } from "../core/script/Script";
 
 
 const runnableScripts: ScriptConstructor<RunnableScript>[] = []
- 
-export function Runnable(url: string) {
+
+/**
+ * Runnable decorator, use in  RunnableScript
+ * @see RunnableScript
+ */
+export function Runnable(url: string = "") {
 
     return function (constructor: ScriptConstructor<RunnableScript>) {
         constructor.prototype.url = url
