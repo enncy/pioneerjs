@@ -1,0 +1,15 @@
+{
+  "name": "pioneerjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "node ./dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer-core": "^10.1.0",
+    "reflect-metadata": "^0.1.13"
+  }
+}
