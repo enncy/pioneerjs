@@ -29,6 +29,7 @@ export class ScriptFactory {
      * ```
      */
     public static getScript<T extends Script>(constructor: ScriptConstructor<T> | Function): T | undefined {
+        
         return <T>this.scripts.get(constructor.name)
     }
 

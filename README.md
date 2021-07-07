@@ -1,13 +1,73 @@
 # pioneerjs
 pioneerjs - a puppeteer framework
 
+![NPM](https://img.shields.io/npm/l/pioneerjs)
 
-## Quickly start
+![npm](https://img.shields.io/npm/v/pioneerjs)
 
-```shell
-npm
+![npm bundle size](https://img.shields.io/bundlephobia/min/pioneerjs)
+
+
+
+ >Pioneerjs is a puppeteer framework that uses the principle of Dependency Injection to inject all the resources(page,browser,...) you need.
+
+- Pioneerjs helps you to manage the `Browser` and `Page` objects of Puppeteer
+- It instantiates and automatically injects Page, Browser, ScriptContext objects for each runnable script
+- You can use RunnableScript to run the puppeteer code and start it with     @Runnable('https://xxx.com') decorator
+- You can use InjectableScripts in any RunnableScript and inject them automatically using the @Inject decorator, no instantiation is needed, the Page, Browser, ScriptContext objects of an InjectableScript are the same as in the RunnableScript it is in, and InjectableScripts generally play the role of tool scripts
+
+
+
+## Getting Started
+
+```bash
+# init your package.json
+npm init
+# install dependencies
+npm install pioneerjs puppeteer-core
+# init typescript config
+tsc --init
+```
+`tscondig.json`
+
+```json
+{
+  "compilerOptions": {
+    "target": "es5", 
+    "module": "commonjs",
+    "outDir": "./dist", 
+    "strict": true,
+    "esModuleInterop": true, 
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true 
+  }
+}
 ```
 
+
+
+create  `src/index.ts`
+
+```typescript
+launch({
+    // your chrome path
+    executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    defaultViewport: null,
+    headless: false,
+}).then(async browser => {
+
+    Pioneer.create(browser, {
+        scripts: [TestScript],
+        events: ['request']
+    })
+
+}); 
+```
+
+
+create `src/script.ts`
 ```typescript
 
 @Injectable()
@@ -52,3 +112,11 @@ export class TestScript extends RunnableScript {
 }
 
 ```
+
+```bash
+# build your project
+tsc
+# run
+node dist/index.js
+```
+

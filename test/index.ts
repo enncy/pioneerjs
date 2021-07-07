@@ -7,20 +7,6 @@ import { Inject } from "../src/decorator/Inject";
 import { Injectable } from "../src/decorator/Injectable";
 import { Runnable } from "../src/decorator/Runnable";
 
-// launch
-
-launch({
-    executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-    defaultViewport: null,
-    headless: false,
-}).then(async browser => {
-
-    Pioneer.create(browser, {
-        scripts: [TestScript],
-        events: ['request']
-    })
-
-});
 
 
 
