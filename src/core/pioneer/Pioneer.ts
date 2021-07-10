@@ -1,14 +1,14 @@
 import { Browser, Page, PageEventObject } from "puppeteer-core";
-import { ScriptContext } from "../script/ScriptContext";
+import { ScriptContext } from "./ScriptContext";
+ 
+import { ScriptEventPool } from "./ScriptEventPool";
 
-import { ScriptStorage } from "../script/ScriptStorage";
-import { ScriptEventPool } from "../script/ScriptEventPool";
-
-import { ScriptFactory } from "../script/ScriptFactory";
+import { ScriptFactory } from "./ScriptFactory";
 import { ScriptConstructor } from "../script/Script";
 import { RunnableScript } from "../script/RunnableScript";
 import { InjectPool } from "../../decorator/Inject";
 import { InjectableScript } from "../script/InjectableScript";
+import { ScriptStorage } from "./ScriptStorage";
 
 
 

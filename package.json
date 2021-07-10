@@ -16,7 +16,6 @@
   "directories": {
     "test": "test"
   },
- 
   "repository": {
     "type": "git",
     "url": "git+https://github.com/enncy/pioneerjs.git"
@@ -31,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/enncy/pioneerjs/issues"
   },
-  "homepage": "https://github.com/enncy/pioneerjs#readme"
+  "homepage": "https://github.com/enncy/pioneerjs#readme",
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
 }
