@@ -1,6 +1,6 @@
 {
   "name": "@pioneerjs/core",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "the core of pioneerjs",
   "keywords": [
     "core",
@@ -27,6 +27,6 @@
     "url": "https://github.com/enncy/pioneerjs/issues"
   },
   "dependencies": {
-    "@pioneerjs/common": "^0.0.0"
+    "@pioneerjs/common": "^0.0.1"
   }
 }
