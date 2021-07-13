@@ -10,7 +10,6 @@
   "author": "enncy <877526278@qq.com>",
   "homepage": "https://github.com/enncy/pioneerjs/tree/main/packages/common#readme",
   "license": "Apache-2.0",
-  "main": "index.js",
   "files": [
     "lib"
   ],
@@ -27,8 +26,5 @@
   "bugs": {
     "url": "https://github.com/enncy/pioneerjs/issues"
   },
-  "dependencies": {
-    "@pioneerjs/core": "^0.0.0",
-    "@pioneerjs/scripts": "^0.0.0"
-  }
+  "devDependencies": {}
 }

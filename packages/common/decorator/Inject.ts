@@ -1,9 +1,9 @@
 
-import { RunnableScript } from "../scripts/RunnableScript";
+import { RunnableScript } from "../../core/scripts/runnablee.script";
 
 import { InjectableScriptLoader } from "./Injectable";
 import 'reflect-metadata';
-import { Script, ScriptConstructor } from "../scripts/Script";
+import { Script, ScriptConstructor } from "../../core/scripts/script";
 
 
 type InjectObjects = {

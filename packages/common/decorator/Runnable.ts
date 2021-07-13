@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { RunnableScript } from "../scripts/RunnableScript"
-import { ScriptConstructor } from "../scripts/Script"
+import { RunnableScript } from "../../core/scripts/runnablee.script"
+import { ScriptConstructor } from "../../core/scripts/script"
 
 
 

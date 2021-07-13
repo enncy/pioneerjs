@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { InjectableScript } from "../scripts/InjectableScript"
-import { ScriptConstructor } from "../scripts/Script"
+import { InjectableScript } from "../../core/scripts/injectable.script"
+import { ScriptConstructor } from "../../core/scripts/script"
 import 'reflect-metadata';
 
 const injectableScriptConstructors: ScriptConstructor<InjectableScript>[] = []

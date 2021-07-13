@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+
+import { Inject, Injectable } from "../../common";
  
-import { WaitForScript } from "@pioneerjs/scripts";
-import { InjectableScript } from "./InjectableScript";
-import { ScriptFactory } from "@pioneerjs/core";
+
+import { InjectableScript } from "./injectable.script";
+import { WaitForScript } from "./waitfor.script";
+
 
 /**
  * runnable script , use @Runnable to decorator   
@@ -18,8 +21,12 @@ import { ScriptFactory } from "@pioneerjs/core";
  * }
  * ```
  */
+@Injectable()
 export abstract class RunnableScript extends InjectableScript {
     url?: string
+
+    @Inject
+    waitFor!: WaitForScript
 
     /** called when browser page created*/
     startup(): void {
@@ -41,9 +48,9 @@ export abstract class RunnableScript extends InjectableScript {
 
             // listening document update
             this.page.on('request', async req => {
-                if(req.resourceType() === 'document'){
-                    const waitFor = ScriptFactory.getScript(WaitForScript)     
-                    waitFor?.nextTick('request',()=>{
+                if (req.resourceType() === 'document') {
+                    // const waitFor = ScriptFactory.getScript(WaitForScript)     
+                    this.waitFor.nextTick('request', () => {
                         this.update()
                     })
                 }
@@ -53,11 +60,11 @@ export abstract class RunnableScript extends InjectableScript {
     }
 
     /** called when the {@link run()} function is called*/
-    async created(): Promise<void> {}
+    async created(): Promise<void> { }
     /** called when the window load  */
     abstract run(): Promise<void>
     /** called when browser page destroyed*/
-    async update(): Promise<void> {}
+    async update(): Promise<void> { }
     /** called when browser page destroyed*/
-    async destroyed(): Promise<void> {}
+    async destroyed(): Promise<void> { }
 }

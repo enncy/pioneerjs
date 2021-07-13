@@ -1,11 +1,14 @@
 import { Browser, Page, PageEventObject } from "puppeteer-core";
-import { ScriptConstructor, RunnableScript, InjectableScript, InjectPool } from "@pioneerjs/common";
+import { InjectPool } from '../../common/decorator/Inject'
 
 
 import { ScriptContext } from "../script/script.context";
 import { ScriptEventPool } from "../script/script.event.pool";
 import { ScriptFactory } from "../script/script.factory";
 import { Store } from "../script/script.store";
+import { RunnableScript } from "../scripts/runnablee.script";
+import { InjectableScript } from "../scripts/injectable.script";
+import { ScriptConstructor } from "../scripts/script";
 
 
 

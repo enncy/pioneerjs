@@ -1,5 +1,6 @@
 import { Page, Browser } from "puppeteer-core";
-import { ScriptContext } from "@pioneerjs/core";
+import { ScriptContext } from "../script/script.context";
+ 
 
 export interface Script {
     name:string,  
