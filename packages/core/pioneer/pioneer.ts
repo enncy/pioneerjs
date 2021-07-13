@@ -1,16 +1,11 @@
 import { Browser, Page, PageEventObject } from "puppeteer-core";
-import { ScriptContext } from "./ScriptContext";
- 
-import { ScriptEventPool } from "./ScriptEventPool";
-
-import { ScriptFactory } from "./ScriptFactory";
-import { ScriptConstructor } from "../script/Script";
-import { RunnableScript } from "../script/RunnableScript";
-import { InjectPool } from "../../decorator/Inject";
-import { InjectableScript } from "../script/InjectableScript";
-import { ScriptStorage } from "./ScriptStorage";
+import { ScriptConstructor, RunnableScript, InjectableScript, InjectPool } from "@pioneerjs/common";
 
 
+import { ScriptContext } from "../script/script.context";
+import { ScriptEventPool } from "../script/script.event.pool";
+import { ScriptFactory } from "../script/script.factory";
+import { Store } from "../script/script.store";
 
 
 
@@ -24,6 +19,7 @@ export class Pioneer {
     private options: PioneerOptioins
 
     constructor(browser: Browser, options: PioneerOptioins) {
+
         this.browser = browser
         this.options = options
 
@@ -55,7 +51,7 @@ export class Pioneer {
             const page = pages.shift()
             if (page) {
                 // create context
-                const context = new ScriptContext(new ScriptStorage(), new ScriptEventPool(page, this.options.events))
+                const context = new ScriptContext(new Store(), new ScriptEventPool(page, this.options.events))
                 // instance
                 const name = Reflect.getMetadata("name", constructor)
                 const script = ScriptFactory.createScript(constructor, { name, page, browser: this.browser, context })
@@ -95,7 +91,7 @@ export class Pioneer {
 
     /** create pages  */
     private async initPages(callback: (pages: Page[]) => void): Promise<Page[]> {
-        let pages: Page[] = []
+        const pages: Page[] = []
         for (let i = 0; i < this.options.scripts.length; i++) {
             pages.push(await this.browser.newPage())
         }
@@ -104,7 +100,7 @@ export class Pioneer {
     }
 
     /** static instance function */
-    static create(browser: Browser, options: PioneerOptioins) {
+    static create(browser: Browser, options: PioneerOptioins): Pioneer {
         return new Pioneer(browser, options)
     }
 
@@ -114,6 +110,8 @@ export interface PioneerOptioins {
     scripts: ScriptConstructor<RunnableScript>[]
     /** some events `keyof PageEventObject`  you want to catch in chrome page*/
     events?: [keyof PageEventObject],
+    /** is open the running log */
+    log?: boolean,
 }
 
 

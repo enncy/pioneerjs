@@ -1,5 +1,6 @@
-import { InjectableScript } from "../core/script/InjectableScript"
-import { ScriptConstructor } from "../core/script/Script"
+/* eslint-disable @typescript-eslint/ban-types */
+import { InjectableScript } from "../scripts/InjectableScript"
+import { ScriptConstructor } from "../scripts/Script"
 import 'reflect-metadata';
 
 const injectableScriptConstructors: ScriptConstructor<InjectableScript>[] = []
@@ -8,9 +9,9 @@ const injectableScriptConstructors: ScriptConstructor<InjectableScript>[] = []
  * Injectable decorator, use in  InjectableScript
  * @see InjectableScript
  */
-export function Injectable() {
-    return function (constructor: ScriptConstructor<InjectableScript>) {
-        Reflect.defineMetadata("name",constructor.name, constructor)
+export function Injectable():Function {
+    return function (constructor: ScriptConstructor<InjectableScript>): void {
+        Reflect.defineMetadata("name", constructor.name, constructor)
         injectableScriptConstructors.push(constructor)
     }
 }

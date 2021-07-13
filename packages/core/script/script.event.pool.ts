@@ -1,4 +1,5 @@
-import { Page, PageEventObject } from "puppeteer-core";
+import { EventEmitter, Page, PageEventObject } from "puppeteer-core";
+import { EventPool } from "../interface/event.pool";
 
 type PageEventObjects = PageEventObject[keyof PageEventObject]
 type PageEventObjectKey = keyof PageEventObject
@@ -18,7 +19,7 @@ type PageEventObjectKey = keyof PageEventObject
  * 
  * ```
  */
-export class ScriptEventPool {
+export class ScriptEventPool implements EventPool {
 
     private page: Page;
     private pool: Map<PageEventObjectKey, PageEventObjects[]>
@@ -31,8 +32,8 @@ export class ScriptEventPool {
     }
 
     /** add event listener, and save event to eventpool*/
-    public on(eventName: PageEventObjectKey) {
-        this.page.on(eventName, (event: PageEventObjects) => {
+    public on(eventName: PageEventObjectKey): EventEmitter {
+        return this.page.on(eventName, (event: PageEventObjects) => {
             const pool = this.pool.get(eventName)
             if (pool) {
                 pool.push(event)
@@ -44,8 +45,8 @@ export class ScriptEventPool {
     }
 
     /** remove event listener */
-    public off(eventName: PageEventObjectKey) {
-        this.page.removeAllListeners(eventName)
+    public off(eventName: PageEventObjectKey): EventEmitter {
+        return this.page.removeAllListeners(eventName)
     }
 
     /** get eventpool */
@@ -54,21 +55,19 @@ export class ScriptEventPool {
     }
 
     /** set eventpool */
-    public setEvents(eventName: PageEventObjectKey, value: PageEventObjects[]) {
-        return this.pool.set(eventName, value)
+    public setEvents(eventName: PageEventObjectKey, value: PageEventObjects[]): void {
+        this.pool.set(eventName, value)
     }
 
     /** remove events, if you want to remove all the events, use {@link ScriptEventPool.removeAllEvents()} */
-    public removeEvents(...eventName: PageEventObjectKey[]) {
+    public removeEvents(...eventName: PageEventObjectKey[]): void {
         eventName.forEach(name => {
             this.pool.delete(name)
         })
     }
 
     /** remove all event */
-    public removeAllEvents() {
+    public removeAllEvents(): void {
         this.pool.clear()
     }
-
-
 }

@@ -1,6 +1,6 @@
 import { PageEventObject } from "puppeteer-core";
-import { Injectable } from "../../decorator/Injectable";
-import { InjectableScript } from "../script/InjectableScript";
+import { Injectable, InjectableScript } from "@pioneerjs/common";
+
 
 
 @Injectable()
@@ -16,6 +16,7 @@ export class WaitForScript extends InjectableScript {
             try {
                 const document = await this.page.evaluateHandle('document')
                 readyState = await this.page.evaluate((document) => document.readyState, document)
+            // eslint-disable-next-line no-empty
             } catch { }
         }
 
@@ -38,14 +39,14 @@ export class WaitForScript extends InjectableScript {
      */
     nextTick(eventName: keyof PageEventObject, callback: () => void): void {
         let eventPool = []
- 
-        function eventHandler(event: any) {
+
+        function eventHandler<T extends keyof PageEventObject>(event: PageEventObject[T]) {
             eventPool.push(event)
         }
 
         this.page.on(eventName, eventHandler)
 
-        let i = setInterval(() => {
+        const i = setInterval(() => {
             if (eventPool.length > 0) {
                 eventPool = []
             } else {

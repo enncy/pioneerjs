@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
  
-import { WaitForScript } from "../utils/WaitForScript";
+import { WaitForScript } from "@pioneerjs/scripts";
 import { InjectableScript } from "./InjectableScript";
-import { ScriptFactory } from "./ScriptFactory";
+import { ScriptFactory } from "@pioneerjs/core";
 
 /**
  * runnable script , use @Runnable to decorator   
@@ -52,11 +53,11 @@ export abstract class RunnableScript extends InjectableScript {
     }
 
     /** called when the {@link run()} function is called*/
-    async created(): Promise<void> { }
+    async created(): Promise<void> {}
     /** called when the window load  */
     abstract run(): Promise<void>
     /** called when browser page destroyed*/
-    async update(): Promise<void> { }
+    async update(): Promise<void> {}
     /** called when browser page destroyed*/
-    async destroyed(): Promise<void> { }
+    async destroyed(): Promise<void> {}
 }

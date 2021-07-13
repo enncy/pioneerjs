@@ -1,5 +1,5 @@
 import { Page, Browser } from "puppeteer-core";
-import { ScriptContext } from "./ScriptContext";
+import { ScriptContext } from "@pioneerjs/core";
 
 export interface Script {
     name:string,  
@@ -16,6 +16,6 @@ export interface ScriptOptions {
     context: ScriptContext
 }
 
-export interface ScriptConstructor<T extends Script> {
+export interface ScriptConstructor<T extends Script>{
     new(options: ScriptOptions): T
 }
