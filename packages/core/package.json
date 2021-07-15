@@ -30,6 +30,6 @@
     "url": "https://github.com/enncy/pioneerjs/issues"
   },
   "dependencies": {
-    "@pioneerjs/common": "^0.0.0"
+    "@pioneerjs/common": "^0.0.2"
   }
 }
