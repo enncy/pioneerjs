@@ -10,7 +10,8 @@
   "author": "enncy <877526278@qq.com>",
   "homepage": "https://github.com/enncy/pioneerjs/tree/main/packages/common#readme",
   "license": "Apache-2.0",
-  "main": "index.js",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "files": [
     "lib"
   ],
