@@ -150,6 +150,9 @@ var RunnableScript = /** @class */ (function (_super) {
         /** called when browser page created*/
         )
     ], RunnableScript.prototype, "waitFor", void 0);
+    RunnableScript = __decorate([
+        common_1.Injectable()
+    ], RunnableScript);
     return RunnableScript;
 }(injectable_script_1.InjectableScript));
 exports.RunnableScript = RunnableScript;

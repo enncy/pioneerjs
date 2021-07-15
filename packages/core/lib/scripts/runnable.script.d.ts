@@ -1,4 +1,5 @@
 import { InjectableScript } from "./injectable.script";
+import { WaitForScript } from "./waitfor.script";
 /**
  * runnable script , use @Runnable to decorator
  * example :
@@ -15,7 +16,7 @@ import { InjectableScript } from "./injectable.script";
  */
 export declare abstract class RunnableScript extends InjectableScript {
     url?: string;
-    private waitFor;
+    waitFor: WaitForScript;
     /** called when browser page created*/
     startup(): void;
     /** called when the {@link run()} function is called*/

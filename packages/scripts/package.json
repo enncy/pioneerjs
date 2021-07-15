@@ -33,5 +33,6 @@
   "dependencies": {
     "@pioneerjs/common": "^0.0.3",
     "@pioneerjs/core": "^0.0.4"
-  }
+  },
+  "gitHead": "46c11c728d98a10b0f7479ed39703c58f2afa4b3"
 }

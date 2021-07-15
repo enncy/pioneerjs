@@ -5,7 +5,8 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "node ./dist/test/app.js"
+    "test": "node ./dist/test/app.js",
+    "publish": " lerna exec \"rd lib /s /q\" &&  lerna run build && lerna publish"
   },
   "author": "enncy",
   "license": "Apache-2.0",
