@@ -98,17 +98,17 @@ var Pioneer = /** @class */ (function () {
      */
     Pioneer.prototype.initInjectableScript = function () {
         var scripts = [];
+        var injectPool = common_1.InjectPool.getInjectPool();
         // inject script
-        for (var _i = 0, _a = common_1.InjectPool.getInjectPool(); _i < _a.length; _i++) {
-            var inject = _a[_i];
+        for (var _i = 0, injectPool_1 = injectPool; _i < injectPool_1.length; _i++) {
+            var inject = injectPool_1[_i];
             var target = script_factory_1.ScriptFactory.getScript(inject.target.constructor);
             if (target) {
-                var page = target.page, browser = target.browser, context = target.context;
                 if (inject.scriptConstructor) {
                     // get script name
                     var name_2 = Reflect.getMetadata("name", inject.scriptConstructor);
                     // create script
-                    var script = script_factory_1.ScriptFactory.createScript(inject.scriptConstructor, { name: name_2, page: page, browser: browser, context: context });
+                    var script = new inject.scriptConstructor(target);
                     // inject
                     Reflect.set(target, inject.propertyKey, script);
                     scripts.push(script);

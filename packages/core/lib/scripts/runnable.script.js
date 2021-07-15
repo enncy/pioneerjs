@@ -38,7 +38,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RunnableScript = void 0;
-var script_factory_1 = require("../script/script.factory");
 var waitfor_script_1 = require("./waitfor.script");
 /**
  * runnable script , use @Runnable to decorator
@@ -93,7 +92,7 @@ var RunnableScript = /** @class */ (function () {
                             var _this = this;
                             return __generator(this, function (_a) {
                                 if (req.resourceType() === 'document') {
-                                    waitFor = script_factory_1.ScriptFactory.getScript(waitfor_script_1.WaitForScript);
+                                    waitFor = new waitfor_script_1.WaitForScript(this);
                                     waitFor.nextTick('request', function () {
                                         _this.update();
                                     });

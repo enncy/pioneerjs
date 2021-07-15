@@ -90,7 +90,7 @@ export class Pioneer {
                     // get script name
                     const name = Reflect.getMetadata("name", inject.scriptConstructor)
                     // create script
-                    const script = new inject.scriptConstructor(target)
+                    const script = new inject.scriptConstructor(Object.assign(target, { name }))
                     // inject
                     Reflect.set(target, inject.propertyKey, script)
                     scripts.push(script)

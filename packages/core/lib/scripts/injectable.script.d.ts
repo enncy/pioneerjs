@@ -25,5 +25,5 @@ export declare class InjectableScript implements Script {
     page: Page;
     browser: Browser;
     context: ScriptContext;
-    constructor({ page, browser, context, name }: ScriptOptions);
+    constructor({ page, browser, context, name }: Script | ScriptOptions);
 }
