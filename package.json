@@ -5,15 +5,14 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "test":"lerna exec --scope=@pioneerjs/core -- npm run test",
+    "test": "lerna exec --scope=@pioneerjs/core -- npm run test",
     "build": " lerna exec -- rd lib /s /q ||  lerna run build",
-    "publish":"lerna publish"
+    "publish": "lerna publish"
   },
   "author": "enncy",
   "license": "Apache-2.0",
   "dependencies": {
-    "puppeteer-core": "^10.1.0",
-    "reflect-metadata": "^0.1.13"
+    "puppeteer-core": "^10.1.0"
   },
   "directories": {
     "test": "test"

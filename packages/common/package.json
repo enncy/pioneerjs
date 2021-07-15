@@ -28,5 +28,8 @@
   },
   "bugs": {
     "url": "https://github.com/enncy/pioneerjs/issues"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
   }
 }
