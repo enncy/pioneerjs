@@ -109,7 +109,7 @@ var Pioneer = /** @class */ (function () {
                     // get script name
                     var name_2 = Reflect.getMetadata("name", inject.scriptConstructor);
                     // create script
-                    var script = new inject.scriptConstructor({ name: name_2, page: page, browser: browser, context: context });
+                    var script = new inject.scriptConstructor({ name: target.name + "." + name_2, page: page, browser: browser, context: context });
                     // inject
                     Reflect.set(target, inject.propertyKey, script);
                     scripts.push(script);
