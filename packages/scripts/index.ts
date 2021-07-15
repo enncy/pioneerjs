@@ -1,4 +1,4 @@
 
 
-
-export * from "./src/waitfor.script"
+export { Sniffer } from "./sniff/sniffer.script";
+ 

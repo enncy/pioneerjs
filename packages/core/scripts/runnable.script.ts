@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
  
-import { WaitForScript } from "@pioneerjs/scripts";
-import { InjectableScript } from "./InjectableScript";
-import { ScriptFactory } from "@pioneerjs/core";
+import { Inject } from "@pioneerjs/common";
+import { InjectableScript } from "./injectable.script";
+import { WaitForScript } from "./waitfor.script";
 
 /**
  * runnable script , use @Runnable to decorator   
@@ -20,6 +20,9 @@ import { ScriptFactory } from "@pioneerjs/core";
  */
 export abstract class RunnableScript extends InjectableScript {
     url?: string
+
+    @Inject()
+    private waitFor!:WaitForScript
 
     /** called when browser page created*/
     startup(): void {
@@ -42,8 +45,7 @@ export abstract class RunnableScript extends InjectableScript {
             // listening document update
             this.page.on('request', async req => {
                 if(req.resourceType() === 'document'){
-                    const waitFor = ScriptFactory.getScript(WaitForScript)     
-                    waitFor?.nextTick('request',()=>{
+                    this.waitFor.nextTick('request',()=>{
                         this.update()
                     })
                 }

@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { RunnableScript } from "../scripts/RunnableScript"
-import { ScriptConstructor } from "../scripts/Script"
 
 
-
-
-const runnableScripts: ScriptConstructor<RunnableScript>[] = []
+const runnableScripts: Function[] = []
 
 /**
  * Runnable decorator, use in  RunnableScript
@@ -13,7 +9,7 @@ const runnableScripts: ScriptConstructor<RunnableScript>[] = []
  */
 export function Runnable(url = ""): Function {
 
-    return function (constructor: ScriptConstructor<RunnableScript>): void {
+    return function (constructor: Function): void {
         constructor.prototype.url = url
         Reflect.defineMetadata("name", constructor.name, constructor)
         runnableScripts.push(constructor)

@@ -23,7 +23,8 @@
     "url": "git+https://github.com/enncy/pioneerjs.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build":"tsc"
   },
   "bugs": {
     "url": "https://github.com/enncy/pioneerjs/issues"
