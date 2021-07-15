@@ -1,7 +1,7 @@
 # pioneerjs
 pioneerjs - a puppeteer framework
 
-<a>![NPM](https://img.shields.io/npm/l/pioneerjs) ![npm](https://img.shields.io/npm/v/pioneerjs)  ![npm bundle size](https://img.shields.io/bundlephobia/min/pioneerjs)</a>
+<a>![NPM](https://img.shields.io/npm/l/pioneerjs) ![npm](https://img.shields.io/npm/v/pioneerjs)  ![npm bundle size](https://img.shields.io/bundlephobia/min/pioneerjs) ![npm](https://img.shields.io/npm/dw/@pioneerjs/core)</a>
 
 
 
@@ -20,8 +20,17 @@ pioneerjs - a puppeteer framework
 ```bash
 # init your package.json
 npm init
+```
+
+```bash
 # install dependencies
-npm install @pioneerjs/core puppeteer-core
+npm install  puppeteer-core  @pioneerjs/core @pioneerjs/common
+# or you can just install pioneerjs
+npm install  puppeteer-core  pioneerjs
+```
+
+
+```bash
 # init typescript config
 tsc --init
 ```
