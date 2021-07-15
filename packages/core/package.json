@@ -31,5 +31,8 @@
   },
   "dependencies": {
     "@pioneerjs/common": "^0.0.3"
+  },
+  "peerDependencies": {
+    "@pioneerjs/common": "^0.0.3"
   }
 }

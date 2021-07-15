@@ -23,7 +23,7 @@ export abstract class RunnableScript extends InjectableScript {
     url?: string
 
     @Inject()
-    private waitFor!:WaitForScript
+    public waitFor!:WaitForScript
 
     /** called when browser page created*/
     startup(): void {
