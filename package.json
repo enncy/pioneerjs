@@ -2,8 +2,8 @@
   "name": "pioneerjs",
   "version": "1.0.3",
   "description": "pioneerjs - a puppeteer framework",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "scripts": {
     "test": "lerna exec --scope=@pioneerjs/core -- npm run test",
     "build": " lerna exec -- rd lib /s /q ||  lerna run build",

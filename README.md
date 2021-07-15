@@ -21,7 +21,7 @@ pioneerjs - a puppeteer framework
 # init your package.json
 npm init
 # install dependencies
-npm install pioneerjs puppeteer-core
+npm install @pioneerjs/core puppeteer-core
 # init typescript config
 tsc --init
 ```
@@ -48,6 +48,11 @@ tsc --init
 create  `src/index.ts`
 
 ```typescript
+
+import { Pioneer } from "@pioneerjs/core";
+import { launch } from "puppeteer-core";
+import { TestScript } from "./src/index";
+
 launch({
     // your chrome path
     executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
@@ -66,26 +71,32 @@ launch({
 
 create `src/script.ts`
 ```typescript
- 
+import { Injectable, Runnable, Inject } from "@pioneerjs/common";
+import { InjectableScript, RunnableScript, WaitForScript } from "@pioneerjs/core";
 
-
+// create your new script
 @Injectable()
 export class Spider extends InjectableScript {
-    async getHtml(url: string): Promise<string> {
+    async getCookie(url: string): Promise<Protocol.Network.Cookie[]> {
         await this.page.goto(url)
-        return await this.page.content()
+        return await this.page.cookies()
     }
 }
 
+// create a new runnable script
 @Runnable("https://baidu.com")
 export class TestScript extends RunnableScript {
 
-    @Inject
+    @Inject()
     private mySpider!: Spider
 
-    async run(): Promise<void> {
+    @Inject()
+    private waitFor!: WaitForScript
 
-        console.log(await this.mySpider.getHtml("https://baidu.com")); // <html>...</html>
+    async run(): Promise<void> {
+ 
+ 
+        console.log(await this.mySpider.getCookie("https://baidu.com")); // <html>...</html>
         console.log("waidForSleep");
         // auto inject you don't need to instance
         this.waitFor.sleep(3000)
@@ -101,7 +112,6 @@ export class TestScript extends RunnableScript {
         this.context.store.set('say', 'hello word')
         console.log(this.waitFor.context.store.get('say'))
     }
-
     // called when document change
     async update(): Promise<void> {
         console.log("update", this.page.url());
