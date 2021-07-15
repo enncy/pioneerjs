@@ -32,6 +32,6 @@
   },
   "dependencies": {
     "@pioneerjs/common": "^0.0.3",
-    "@pioneerjs/core": "^0.0.3"
+    "@pioneerjs/core": "^0.0.4"
   }
 }
