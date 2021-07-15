@@ -1,5 +1,6 @@
 import { PageEventObject } from "puppeteer-core";
-import { Injectable, InjectableScript } from "@pioneerjs/common";
+import { Injectable } from "@pioneerjs/common";
+import { InjectableScript } from "..";
 
 
 

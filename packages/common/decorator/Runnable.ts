@@ -7,7 +7,7 @@ const runnableScripts: Function[] = []
  * Runnable decorator, use in  RunnableScript
  * @see RunnableScript
  */
-export function Runnable(url = ""): Function {
+export function Runnable(url = ""): ClassDecorator {
 
     return function (constructor: Function): void {
         constructor.prototype.url = url

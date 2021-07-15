@@ -2,13 +2,13 @@
 
 import 'reflect-metadata';
 
-const injectableScriptConstructors: Function[] = []
+const injectableScriptConstructors: any[] = []
 
 /**
  * Injectable decorator, use in  InjectableScript
  * @see InjectableScript
  */
-export function Injectable(): Function {
+export function Injectable(): ClassDecorator {
     return function (constructor: Function): void {
         Reflect.defineMetadata("name", constructor.name, constructor)
         injectableScriptConstructors.push(constructor)
@@ -16,10 +16,10 @@ export function Injectable(): Function {
 }
 
 export class InjectableScriptLoader {
-    static getScriptConstructors(): Function[] {
+    static getScriptConstructors<T extends Function>(): T[] {
         return injectableScriptConstructors
     }
-    static getScriptConstructor(constructor: Function): Function | undefined {
+    static getScriptConstructor<T extends Function>(constructor: T): T | undefined {
         return injectableScriptConstructors.find(i => i.name === constructor.name)
     }
 }

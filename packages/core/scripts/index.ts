@@ -16,6 +16,6 @@ export interface ScriptOptions {
     context: ScriptContext
 }
 
-export interface ScriptConstructor<T extends Script>{
+export interface ScriptConstructor<T extends Script> {
     new(options: ScriptOptions): T
 }

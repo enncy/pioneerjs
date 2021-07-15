@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 
 
 import { InjectableScriptLoader } from "./Injectable";
@@ -8,7 +9,7 @@ import 'reflect-metadata';
 type InjectObjects = {
     target: Object,
     propertyKey: string | symbol,
-    scriptConstructor: Function | undefined
+    scriptConstructor: any | undefined
 }
 
 const injectPool = new Array<InjectObjects>()

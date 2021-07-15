@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
-import { Script, ScriptConstructor, ScriptOptions } from "@pioneerjs/common";
+import { Script, ScriptConstructor, ScriptOptions } from "../scripts"
 
+ 
 /**
  * create script
  */
