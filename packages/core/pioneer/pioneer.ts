@@ -85,12 +85,12 @@ export class Pioneer {
             const target = ScriptFactory.getScript(inject.target.constructor)
 
             if (target) {
-
+                const { page, browser, context } = target
                 if (inject.scriptConstructor) {
                     // get script name
                     const name = Reflect.getMetadata("name", inject.scriptConstructor)
                     // create script
-                    const script = new inject.scriptConstructor(Object.assign(target, { name }))
+                    const script = new inject.scriptConstructor({ name, page, browser, context })
                     // inject
                     Reflect.set(target, inject.propertyKey, script)
                     scripts.push(script)

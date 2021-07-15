@@ -108,7 +108,7 @@ var Pioneer = /** @class */ (function () {
                     // get script name
                     var name_2 = Reflect.getMetadata("name", inject.scriptConstructor);
                     // create script
-                    var script = new inject.scriptConstructor(target);
+                    var script = new inject.scriptConstructor(Object.assign(target, { name: name_2 }));
                     // inject
                     Reflect.set(target, inject.propertyKey, script);
                     scripts.push(script);
