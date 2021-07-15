@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
- 
+
 import { Page, Browser } from "puppeteer-core";
- 
+
 import { ScriptContext } from "../script/script.context";
 import { ScriptFactory } from "../script/script.factory";
 import { Script, ScriptOptions } from "./script";
@@ -22,7 +22,7 @@ import { WaitForScript } from "./waitfor.script";
  * }
  * ```
  */
- 
+
 export abstract class RunnableScript implements Script {
     url?: string
     name: string;
@@ -42,8 +42,6 @@ export abstract class RunnableScript implements Script {
     startup(): void {
         (async () => {
 
-
-
             // listening destroyed
             this.page.once('close', () => this.destroyed())
 
@@ -62,7 +60,7 @@ export abstract class RunnableScript implements Script {
             // listening document update
             this.page.on('request', async req => {
                 if (req.resourceType() === 'document') {
-                    const waitFor = ScriptFactory.getScript(WaitForScript)
+                    const waitFor = new WaitForScript(this)
                     waitFor.nextTick('request', () => {
                         this.update()
                     })

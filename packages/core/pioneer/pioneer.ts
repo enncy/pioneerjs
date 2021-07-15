@@ -10,6 +10,7 @@ import { Store } from "../script/script.store";
 import { ScriptConstructor } from "../scripts/script";
 import { RunnableScript } from "../scripts/runnable.script";
 import { InjectableScript } from "../scripts/injectable.script";
+import { WaitForScript } from "../scripts/waitfor.script";
 
 
 
@@ -55,7 +56,7 @@ export class Pioneer {
         const constructors = this.options.scripts
 
         for (const constructor of constructors) {
-  
+
             const page = pages.shift()
             if (page) {
                 // create context
@@ -76,18 +77,20 @@ export class Pioneer {
      */
     private initInjectableScript(): InjectableScript[] {
         const scripts: InjectableScript[] = []
+        const injectPool = InjectPool.getInjectPool()
+
         // inject script
-        for (const inject of InjectPool.getInjectPool()) {
+        for (const inject of injectPool) {
 
             const target = ScriptFactory.getScript(inject.target.constructor)
 
             if (target) {
-                const { page, browser, context } = target
+
                 if (inject.scriptConstructor) {
                     // get script name
                     const name = Reflect.getMetadata("name", inject.scriptConstructor)
                     // create script
-                    const script = ScriptFactory.createScript(inject.scriptConstructor, { name, page, browser, context })
+                    const script = new inject.scriptConstructor(target)
                     // inject
                     Reflect.set(target, inject.propertyKey, script)
                     scripts.push(script)

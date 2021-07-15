@@ -20,7 +20,7 @@ export interface NativeScripts {
 export class ScriptFactory {
     /** map */
     private static scripts: Map<string, Script> = new Map()
-
+ 
     /**
      * create script 
      * @param constructor script constructor,  {@link Runnable}

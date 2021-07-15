@@ -1,10 +1,11 @@
 import { Browser, Page } from "puppeteer-core";
- 
- 
+
+
 import { ScriptContext } from "../script/script.context";
+import { RunnableScript } from "./runnable.script";
 import { Script, ScriptOptions } from "./script";
- 
- 
+
+
 
 
 /**
@@ -26,13 +27,13 @@ import { Script, ScriptOptions } from "./script";
  * }
  * ```
  */
-export class InjectableScript implements Script  {
+export class InjectableScript implements Script {
     name: string;
     page: Page;
     browser: Browser;
     context: ScriptContext;
 
-    constructor({ page, browser, context, name }: ScriptOptions) {
+    constructor({ page, browser, context, name }: Script | ScriptOptions) {
         this.name = name
         this.page = page
         this.browser = browser
