@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-types */
-
 import 'reflect-metadata';
 
 const injectableScriptConstructors: any[] = []

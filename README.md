@@ -60,16 +60,18 @@ launch({
         events: ['request']
     })
 
-}); 
+});
 ```
 
 
 create `src/script.ts`
 ```typescript
+ 
+
 
 @Injectable()
 export class Spider extends InjectableScript {
-    async getHtml(url: string) {
+    async getHtml(url: string): Promise<string> {
         await this.page.goto(url)
         return await this.page.content()
     }
@@ -80,9 +82,6 @@ export class TestScript extends RunnableScript {
 
     @Inject
     private mySpider!: Spider
-
-    @Inject
-    private waitFor!: WaitForScript
 
     async run(): Promise<void> {
 
@@ -99,11 +98,12 @@ export class TestScript extends RunnableScript {
         console.log(this.context.eventPool.getEvents('request')?.length)
 
         // Script communication
-        this.context.storage.set('say', 'hello word')
-        console.log(this.waitFor.context.storage.get('say'))
+        this.context.store.set('say', 'hello word')
+        console.log(this.waitFor.context.store.get('say'))
     }
+
     // called when document change
-    async update() {
+    async update(): Promise<void> {
         console.log("update", this.page.url());
     }
 }

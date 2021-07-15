@@ -1,8 +1,17 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+
+import { Inject, Injectable } from "../../common";
  
-import { Inject,Injectable } from "@pioneerjs/common";
+<<<<<<< HEAD:packages/core/scripts/runnable.script.ts
+import { Inject } from "@pioneerjs/common";
 import { InjectableScript } from "./injectable.script";
 import { WaitForScript } from "./waitfor.script";
+=======
+
+import { InjectableScript } from "./injectable.script";
+import { WaitForScript } from "./waitfor.script";
+
+>>>>>>> 928488426ae28020d0631bc5a52a712dd15b5635:packages/core/scripts/runnablee.script.ts
 
 /**
  * runnable script , use @Runnable to decorator   
@@ -22,8 +31,13 @@ import { WaitForScript } from "./waitfor.script";
 export abstract class RunnableScript extends InjectableScript {
     url?: string
 
+<<<<<<< HEAD:packages/core/scripts/runnable.script.ts
     @Inject()
     private waitFor!:WaitForScript
+=======
+    @Inject
+    waitFor!: WaitForScript
+>>>>>>> 928488426ae28020d0631bc5a52a712dd15b5635:packages/core/scripts/runnablee.script.ts
 
     /** called when browser page created*/
     startup(): void {
@@ -45,8 +59,14 @@ export abstract class RunnableScript extends InjectableScript {
 
             // listening document update
             this.page.on('request', async req => {
+<<<<<<< HEAD:packages/core/scripts/runnable.script.ts
                 if(req.resourceType() === 'document'){
                     this.waitFor.nextTick('request',()=>{
+=======
+                if (req.resourceType() === 'document') {
+                    // const waitFor = ScriptFactory.getScript(WaitForScript)     
+                    this.waitFor.nextTick('request', () => {
+>>>>>>> 928488426ae28020d0631bc5a52a712dd15b5635:packages/core/scripts/runnablee.script.ts
                         this.update()
                     })
                 }
