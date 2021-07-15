@@ -104,11 +104,12 @@ var Pioneer = /** @class */ (function () {
             var inject = injectPool_1[_i];
             var target = script_factory_1.ScriptFactory.getScript(inject.target.constructor);
             if (target) {
+                var page = target.page, browser = target.browser, context = target.context;
                 if (inject.scriptConstructor) {
                     // get script name
                     var name_2 = Reflect.getMetadata("name", inject.scriptConstructor);
                     // create script
-                    var script = new inject.scriptConstructor(Object.assign(target, { name: name_2 }));
+                    var script = new inject.scriptConstructor({ name: name_2, page: page, browser: browser, context: context });
                     // inject
                     Reflect.set(target, inject.propertyKey, script);
                     scripts.push(script);
