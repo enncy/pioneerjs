@@ -5,8 +5,9 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "node ./dist/test/app.js",
-    "publish": " lerna exec \"rd lib /s /q\" &&  lerna run build && lerna publish"
+    "test":"lerna exec --scope=@pioneerjs/core -- npm run test",
+    "build": " lerna exec -- rd lib /s /q ||  lerna run build",
+    "publish":"lerna publish"
   },
   "author": "enncy",
   "license": "Apache-2.0",

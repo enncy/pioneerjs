@@ -1,6 +1,6 @@
 import { Browser, Page } from "puppeteer-core";
-import { Script, ScriptOptions } from ".";
 import { ScriptContext } from "../script/script.context";
+import { Script, ScriptOptions } from "./script";
 /**
  *  injectable script, use in runnable script like tool or utils
  * example :

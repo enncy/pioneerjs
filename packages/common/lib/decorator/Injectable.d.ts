@@ -5,6 +5,6 @@ import 'reflect-metadata';
  */
 export declare function Injectable(): ClassDecorator;
 export declare class InjectableScriptLoader {
-    static getScriptConstructors<T extends Function>(): T[];
-    static getScriptConstructor<T extends Function>(constructor: T): T | undefined;
+    static getScriptConstructors(): any[];
+    static getScriptConstructor(constructor: any): any | undefined;
 }

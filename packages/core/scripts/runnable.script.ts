@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
  
-import { Inject,Injectable } from "@pioneerjs/common";
-import { InjectableScript } from "./injectable.script";
+import { Page, Browser } from "puppeteer-core";
+ 
+import { ScriptContext } from "../script/script.context";
+import { ScriptFactory } from "../script/script.factory";
+import { Script, ScriptOptions } from "./script";
+
 import { WaitForScript } from "./waitfor.script";
 
 /**
@@ -18,16 +22,28 @@ import { WaitForScript } from "./waitfor.script";
  * }
  * ```
  */
-@Injectable()
-export abstract class RunnableScript extends InjectableScript {
+ 
+export abstract class RunnableScript implements Script {
     url?: string
+    name: string;
+    page: Page;
+    browser: Browser;
+    context: ScriptContext;
 
-    @Inject()
-    public waitFor!:WaitForScript
+    constructor({ page, browser, context, name }: ScriptOptions) {
+        this.name = name
+        this.page = page
+        this.browser = browser
+        this.context = context
+    }
+
 
     /** called when browser page created*/
     startup(): void {
         (async () => {
+
+
+
             // listening destroyed
             this.page.once('close', () => this.destroyed())
 
@@ -45,8 +61,9 @@ export abstract class RunnableScript extends InjectableScript {
 
             // listening document update
             this.page.on('request', async req => {
-                if(req.resourceType() === 'document'){
-                    this.waitFor.nextTick('request',()=>{
+                if (req.resourceType() === 'document') {
+                    const waitFor = ScriptFactory.getScript(WaitForScript)
+                    waitFor.nextTick('request', () => {
                         this.update()
                     })
                 }

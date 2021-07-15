@@ -1,8 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
-import { Script, ScriptConstructor, ScriptOptions } from "../scripts"
-
  
+import { InjectableScript } from "../scripts/injectable.script"
+import { RunnableScript } from "../scripts/runnable.script"
+import { Script, ScriptConstructor, ScriptOptions } from "../scripts/script"
+import { WaitForScript } from "../scripts/waitfor.script"
+
+
+export interface NativeScripts {
+    waitForScript: WaitForScript
+    script: Script
+    runnableScript: RunnableScript,
+    InjectableScript: InjectableScript
+}
+
 /**
  * create script
  */
@@ -30,12 +41,11 @@ export class ScriptFactory {
      * ScriptFactory.getScript('TestScript') // TestScript
      * ```
      */
-    public static getScript<T extends Script>(constructor: ScriptConstructor<T> | Function): T | undefined {
-
+    public static getScript<T extends Script>(constructor: ScriptConstructor<T> | Function): T  {
         return <T>this.scripts.get(constructor.name)
     }
 
-    public static getScriptByName<T extends Script>(name: string): T | undefined {
+    public static getScriptByName<T extends Script>(name: string): T  {
         return <T>this.scripts.get(name)
     }
 

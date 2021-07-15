@@ -20,6 +20,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -57,89 +60,86 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WaitForScript = void 0;
+exports.TestScript = exports.Spider = void 0;
 var common_1 = require("@pioneerjs/common");
-var injectable_script_1 = require("./injectable.script");
-var WaitForScript = /** @class */ (function (_super) {
-    __extends(WaitForScript, _super);
-    function WaitForScript() {
+var __1 = require("..");
+var waitfor_script_1 = require("../scripts/waitfor.script");
+var Spider = /** @class */ (function (_super) {
+    __extends(Spider, _super);
+    function Spider() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    /**
-     * wait for document readystate becomes complete
-     */
-    WaitForScript.prototype.documentReady = function () {
+    Spider.prototype.getCookie = function (url) {
         return __awaiter(this, void 0, void 0, function () {
-            var readyState, document_1, _a;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0:
-                        if (!(readyState !== 'complete')) return [3 /*break*/, 6];
-                        this.sleep(1000);
-                        _b.label = 1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.page.goto(url)];
                     case 1:
-                        _b.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, this.page.evaluateHandle('document')];
-                    case 2:
-                        document_1 = _b.sent();
-                        return [4 /*yield*/, this.page.evaluate(function (document) { return document.readyState; }, document_1)
-                            // eslint-disable-next-line no-empty
-                        ];
-                    case 3:
-                        readyState = _b.sent();
-                        return [3 /*break*/, 5];
-                    case 4:
-                        _a = _b.sent();
-                        return [3 /*break*/, 5];
-                    case 5: return [3 /*break*/, 0];
-                    case 6: return [2 /*return*/];
+                        _a.sent();
+                        return [4 /*yield*/, this.page.cookies()];
+                    case 2: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    /**
-     * wait for window load
-     */
-    WaitForScript.prototype.load = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            return __generator(this, function (_a) {
-                return [2 /*return*/, new Promise(function (resolve) { return _this.page.once('load', function () { return resolve(); }); })];
-            });
-        });
-    };
-    /** wait for sleep  */
-    WaitForScript.prototype.sleep = function (timeout) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, new Promise(function (resolve) { return setTimeout(function () { return resolve(); }, timeout); })];
-            });
-        });
-    };
-    /**
-     * wait for next tick, if there are no event in a second, it will resolve
-     */
-    WaitForScript.prototype.nextTick = function (eventName, callback) {
-        var _this = this;
-        var eventPool = [];
-        function eventHandler(event) {
-            eventPool.push(event);
-        }
-        this.page.on(eventName, eventHandler);
-        var i = setInterval(function () {
-            if (eventPool.length > 0) {
-                eventPool = [];
-            }
-            else {
-                clearInterval(i);
-                _this.page.off(eventName, eventHandler);
-                callback();
-            }
-        }, 1000);
-    };
-    WaitForScript = __decorate([
+    Spider = __decorate([
         common_1.Injectable()
-    ], WaitForScript);
-    return WaitForScript;
-}(injectable_script_1.InjectableScript));
-exports.WaitForScript = WaitForScript;
+    ], Spider);
+    return Spider;
+}(__1.InjectableScript));
+exports.Spider = Spider;
+var TestScript = /** @class */ (function (_super) {
+    __extends(TestScript, _super);
+    function TestScript() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    TestScript.prototype.run = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            var _b, _c;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
+                    case 0:
+                        _c = (_b = console).log;
+                        return [4 /*yield*/, this.mySpider.getCookie("https://baidu.com")];
+                    case 1:
+                        _c.apply(_b, [_d.sent()]); // <html>...</html>
+                        console.log("waidForSleep");
+                        // auto inject you don't need to instance
+                        this.waitFor.sleep(3000);
+                        console.log(this.waitFor.page.url());
+                        // InjectableScript use same page,and context with RunnableScript
+                        console.log(this.waitFor.page === this.page);
+                        // eventPool: catch all the event
+                        console.log((_a = this.context.eventPool.getEvents('request')) === null || _a === void 0 ? void 0 : _a.length);
+                        // Script communication
+                        this.context.store.set('say', 'hello word');
+                        console.log(this.waitFor.context.store.get('say'));
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    // called when document change
+    TestScript.prototype.update = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                console.log("update", this.page.url());
+                return [2 /*return*/];
+            });
+        });
+    };
+    __decorate([
+        common_1.Inject(),
+        __metadata("design:type", Spider)
+    ], TestScript.prototype, "mySpider", void 0);
+    __decorate([
+        common_1.Inject(),
+        __metadata("design:type", waitfor_script_1.WaitForScript)
+    ], TestScript.prototype, "waitFor", void 0);
+    TestScript = __decorate([
+        common_1.Runnable("https://baidu.com")
+    ], TestScript);
+    return TestScript;
+}(__1.RunnableScript));
+exports.TestScript = TestScript;

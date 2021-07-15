@@ -1,12 +1,15 @@
 import { Browser, Page, PageEventObject } from "puppeteer-core";
-import {  InjectPool } from "@pioneerjs/common";
+import { InjectPool, RunnableScriptLoader, RUNNABLE_NAME_SYMBOL } from "@pioneerjs/common";
 
 
 import { ScriptContext } from "../script/script.context";
 import { ScriptEventPool } from "../script/script.event.pool";
 import { ScriptFactory } from "../script/script.factory";
 import { Store } from "../script/script.store";
-import { RunnableScript, InjectableScript, ScriptConstructor } from "..";
+
+import { ScriptConstructor } from "../scripts/script";
+import { RunnableScript } from "../scripts/runnable.script";
+import { InjectableScript } from "../scripts/injectable.script";
 
 
 
@@ -18,6 +21,7 @@ export class Pioneer {
 
     private browser: Browser
     private options: PioneerOptioins
+
 
     constructor(browser: Browser, options: PioneerOptioins) {
 
@@ -34,10 +38,10 @@ export class Pioneer {
             // start script
             for (const script of runnableScripts) {
                 script.startup()
-                console.log(`[pioneer]:script running - ${script.name}`);
+                console.log(`[pioneerjs]:script running - ${script.name}`);
             }
             for (const script of injectableScripts) {
-                console.log(`[pioneer]:script injected - ${script.name}`);
+                console.log(`[pioneerjs]:script injected - ${script.name}`);
             }
         })
     }
@@ -48,14 +52,17 @@ export class Pioneer {
      */
     private initRunnableScript(pages: Page[]): RunnableScript[] {
         const scripts: RunnableScript[] = []
-        for (const constructor of this.options.scripts) {
+        const constructors = this.options.scripts
+
+        for (const constructor of constructors) {
+  
             const page = pages.shift()
             if (page) {
                 // create context
                 const context = new ScriptContext(new Store(), new ScriptEventPool(page, this.options.events))
                 // instance
-                const name = Reflect.getMetadata("name", constructor)
-                const script = ScriptFactory.createScript(constructor, { name, page, browser: this.browser, context })
+                const name = Reflect.getMetadata(RUNNABLE_NAME_SYMBOL, constructor)
+                const script = ScriptFactory.createScript<RunnableScript>(constructor, { name, page, browser: this.browser, context })
                 // startup
                 scripts.push(script)
             }
@@ -92,8 +99,12 @@ export class Pioneer {
 
     /** create pages  */
     private async initPages(callback: (pages: Page[]) => void): Promise<Page[]> {
-        const pages: Page[] = []
-        for (let i = 0; i < this.options.scripts.length; i++) {
+        const pages: Page[] = await this.browser.pages()
+        let constructors = this.options.scripts
+        // remove RunnableScript
+        constructors = constructors.filter(i => i.name !== RunnableScript.name)
+        // start in one, because browser launch start with one bage
+        for (let i = 1; i < constructors.length; i++) {
             pages.push(await this.browser.newPage())
         }
         callback(pages)

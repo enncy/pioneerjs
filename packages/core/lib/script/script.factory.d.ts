@@ -1,4 +1,13 @@
-import { Script, ScriptConstructor, ScriptOptions } from "../scripts";
+import { InjectableScript } from "../scripts/injectable.script";
+import { RunnableScript } from "../scripts/runnable.script";
+import { Script, ScriptConstructor, ScriptOptions } from "../scripts/script";
+import { WaitForScript } from "../scripts/waitfor.script";
+export interface NativeScripts {
+    waitForScript: WaitForScript;
+    script: Script;
+    runnableScript: RunnableScript;
+    InjectableScript: InjectableScript;
+}
 /**
  * create script
  */
@@ -20,6 +29,6 @@ export declare class ScriptFactory {
      * ScriptFactory.getScript('TestScript') // TestScript
      * ```
      */
-    static getScript<T extends Script>(constructor: ScriptConstructor<T> | Function): T | undefined;
-    static getScriptByName<T extends Script>(name: string): T | undefined;
+    static getScript<T extends Script>(constructor: ScriptConstructor<T> | Function): T;
+    static getScriptByName<T extends Script>(name: string): T;
 }

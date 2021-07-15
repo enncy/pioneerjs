@@ -1,7 +1,7 @@
 import { PageEventObject } from "puppeteer-core";
 import { Injectable } from "@pioneerjs/common";
-import { InjectableScript } from "..";
-
+import { InjectableScript } from "./injectable.script";
+ 
 
 
 @Injectable()
@@ -17,7 +17,7 @@ export class WaitForScript extends InjectableScript {
             try {
                 const document = await this.page.evaluateHandle('document')
                 readyState = await this.page.evaluate((document) => document.readyState, document)
-            // eslint-disable-next-line no-empty
+                // eslint-disable-next-line no-empty
             } catch { }
         }
 

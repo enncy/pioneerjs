@@ -42,6 +42,7 @@ var script_context_1 = require("../script/script.context");
 var script_event_pool_1 = require("../script/script.event.pool");
 var script_factory_1 = require("../script/script.factory");
 var script_store_1 = require("../script/script.store");
+var runnable_script_1 = require("../scripts/runnable.script");
 /**
  * the appliaction starter
  *
@@ -61,11 +62,11 @@ var Pioneer = /** @class */ (function () {
             for (var _i = 0, runnableScripts_1 = runnableScripts; _i < runnableScripts_1.length; _i++) {
                 var script = runnableScripts_1[_i];
                 script.startup();
-                console.log("[pioneer]:script running - " + script.name);
+                console.log("[pioneerjs]:script running - " + script.name);
             }
             for (var _a = 0, injectableScripts_1 = injectableScripts; _a < injectableScripts_1.length; _a++) {
                 var script = injectableScripts_1[_a];
-                console.log("[pioneer]:script injected - " + script.name);
+                console.log("[pioneerjs]:script injected - " + script.name);
             }
         });
     }
@@ -75,14 +76,15 @@ var Pioneer = /** @class */ (function () {
      */
     Pioneer.prototype.initRunnableScript = function (pages) {
         var scripts = [];
-        for (var _i = 0, _a = this.options.scripts; _i < _a.length; _i++) {
-            var constructor = _a[_i];
+        var constructors = this.options.scripts;
+        for (var _i = 0, constructors_1 = constructors; _i < constructors_1.length; _i++) {
+            var constructor = constructors_1[_i];
             var page = pages.shift();
             if (page) {
                 // create context
                 var context = new script_context_1.ScriptContext(new script_store_1.Store(), new script_event_pool_1.ScriptEventPool(page, this.options.events));
                 // instance
-                var name_1 = Reflect.getMetadata("name", constructor);
+                var name_1 = Reflect.getMetadata(common_1.RUNNABLE_NAME_SYMBOL, constructor);
                 var script = script_factory_1.ScriptFactory.createScript(constructor, { name: name_1, page: page, browser: this.browser, context: context });
                 // startup
                 scripts.push(script);
@@ -118,24 +120,28 @@ var Pioneer = /** @class */ (function () {
     /** create pages  */
     Pioneer.prototype.initPages = function (callback) {
         return __awaiter(this, void 0, void 0, function () {
-            var pages, i, _a, _b;
+            var pages, constructors, i, _a, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
-                    case 0:
-                        pages = [];
-                        i = 0;
-                        _c.label = 1;
+                    case 0: return [4 /*yield*/, this.browser.pages()];
                     case 1:
-                        if (!(i < this.options.scripts.length)) return [3 /*break*/, 4];
+                        pages = _c.sent();
+                        constructors = this.options.scripts;
+                        // remove RunnableScript
+                        constructors = constructors.filter(function (i) { return i.name !== runnable_script_1.RunnableScript.name; });
+                        i = 1;
+                        _c.label = 2;
+                    case 2:
+                        if (!(i < constructors.length)) return [3 /*break*/, 5];
                         _b = (_a = pages).push;
                         return [4 /*yield*/, this.browser.newPage()];
-                    case 2:
-                        _b.apply(_a, [_c.sent()]);
-                        _c.label = 3;
                     case 3:
-                        i++;
-                        return [3 /*break*/, 1];
+                        _b.apply(_a, [_c.sent()]);
+                        _c.label = 4;
                     case 4:
+                        i++;
+                        return [3 /*break*/, 2];
+                    case 5:
                         callback(pages);
                         return [2 /*return*/, pages];
                 }

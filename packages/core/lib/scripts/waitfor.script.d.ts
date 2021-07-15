@@ -1,5 +1,5 @@
 import { PageEventObject } from "puppeteer-core";
-import { InjectableScript } from "..";
+import { InjectableScript } from "./injectable.script";
 export declare class WaitForScript extends InjectableScript {
     /**
      * wait for document readystate becomes complete

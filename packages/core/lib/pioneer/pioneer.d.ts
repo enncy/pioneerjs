@@ -1,5 +1,6 @@
 import { Browser, PageEventObject } from "puppeteer-core";
-import { RunnableScript, ScriptConstructor } from "..";
+import { ScriptConstructor } from "../scripts/script";
+import { RunnableScript } from "../scripts/runnable.script";
 /**
  * the appliaction starter
  *

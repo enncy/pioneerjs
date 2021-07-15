@@ -15,10 +15,10 @@ export function Injectable(): ClassDecorator {
 }
 
 export class InjectableScriptLoader {
-    static getScriptConstructors<T extends Function>(): T[] {
+    static getScriptConstructors(): any[] {
         return injectableScriptConstructors
     }
-    static getScriptConstructor<T extends Function>(constructor: T): T | undefined {
+    static getScriptConstructor(constructor: any): any | undefined {
         return injectableScriptConstructors.find(i => i.name === constructor.name)
     }
 }

@@ -17,4 +17,3 @@ __exportStar(require("./script/script.factory"), exports);
 __exportStar(require("./scripts/injectable.script"), exports);
 __exportStar(require("./scripts/runnable.script"), exports);
 __exportStar(require("./scripts/waitfor.script"), exports);
-__exportStar(require("./scripts"), exports);

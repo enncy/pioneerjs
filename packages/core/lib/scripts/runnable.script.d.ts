@@ -1,5 +1,6 @@
-import { InjectableScript } from "./injectable.script";
-import { WaitForScript } from "./waitfor.script";
+import { Page, Browser } from "puppeteer-core";
+import { ScriptContext } from "../script/script.context";
+import { Script, ScriptOptions } from "./script";
 /**
  * runnable script , use @Runnable to decorator
  * example :
@@ -14,9 +15,13 @@ import { WaitForScript } from "./waitfor.script";
  * }
  * ```
  */
-export declare abstract class RunnableScript extends InjectableScript {
+export declare abstract class RunnableScript implements Script {
     url?: string;
-    waitFor: WaitForScript;
+    name: string;
+    page: Page;
+    browser: Browser;
+    context: ScriptContext;
+    constructor({ page, browser, context, name }: ScriptOptions);
     /** called when browser page created*/
     startup(): void;
     /** called when the {@link run()} function is called*/
