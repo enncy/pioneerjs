@@ -1,6 +1,10 @@
+import { Injectable } from "@pioneerjs/common";
+import { InjectableScript } from "@pioneerjs/core";
 
  
  
-export class Sniffer   {
 
+@Injectable()
+export class Sniffer  extends InjectableScript {
+    
 }

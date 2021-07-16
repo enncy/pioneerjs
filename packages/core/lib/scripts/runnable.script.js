@@ -65,15 +65,28 @@ var RunnableScript = /** @class */ (function () {
     RunnableScript.prototype.startup = function () {
         var _this = this;
         (function () { return __awaiter(_this, void 0, void 0, function () {
+            var lisenningUpdate;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        lisenningUpdate = function (req) {
+                            if (req.resourceType() === 'document') {
+                                var waitFor = new waitfor_script_1.WaitForScript(_this);
+                                waitFor.nextTick('request', function () {
+                                    _this.update();
+                                });
+                            }
+                        };
                         // listening destroyed
                         this.page.once('close', function () { return _this.destroyed(); });
                         if (!(this.url && this.url !== '')) return [3 /*break*/, 2];
                         // listening load
-                        this.page.once('load', function () { return _this.run(); });
+                        this.page.once('load', function () {
+                            _this.run();
+                            // listening document update
+                            _this.page.on('request', lisenningUpdate);
+                        });
                         // goto the @Runnable's url value
                         return [4 /*yield*/, this.page.goto(this.url)];
                     case 1:
@@ -82,24 +95,12 @@ var RunnableScript = /** @class */ (function () {
                         return [3 /*break*/, 3];
                     case 2:
                         this.run();
+                        // listening document update
+                        this.page.on('request', lisenningUpdate);
                         _a.label = 3;
                     case 3:
                         //callback
                         this.created();
-                        // listening document update
-                        this.page.on('request', function (req) { return __awaiter(_this, void 0, void 0, function () {
-                            var waitFor;
-                            var _this = this;
-                            return __generator(this, function (_a) {
-                                if (req.resourceType() === 'document') {
-                                    waitFor = new waitfor_script_1.WaitForScript(this);
-                                    waitFor.nextTick('request', function () {
-                                        _this.update();
-                                    });
-                                }
-                                return [2 /*return*/];
-                            });
-                        }); });
                         return [2 /*return*/];
                 }
             });

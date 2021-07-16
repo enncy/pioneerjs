@@ -1,2 +1,3 @@
-export declare class Sniffer {
+import { InjectableScript } from "@pioneerjs/core";
+export declare class Sniffer extends InjectableScript {
 }
