@@ -37,17 +37,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var puppeteer_core_1 = require("puppeteer-core");
-var _1 = require(".");
+var index_1 = require("./index");
 var __1 = require("..");
 puppeteer_core_1.launch({
     // your chrome path
-    executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
     defaultViewport: null,
     headless: false,
 }).then(function (browser) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         __1.Pioneer.create(browser, {
-            scripts: [_1.TestScript],
+            scripts: [index_1.TestScript],
             events: ['request']
         });
         return [2 /*return*/];
