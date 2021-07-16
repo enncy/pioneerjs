@@ -1,6 +1,6 @@
 {
   "name": "@pioneerjs/scripts",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "pioneerjs scripts package.",
   "keywords": [
     "pioneerjs",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@pioneerjs/common": "^0.0.6",
-    "@pioneerjs/core": "^0.0.8"
+    "@pioneerjs/core": "^0.0.9"
   },
   "gitHead": "e5d04184adec5b5f0a8a5dcb4519c5c15e3f9d47"
 }
