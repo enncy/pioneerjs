@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
-import { Page, Browser } from "puppeteer-core";
+import { Page, Browser, HTTPRequest } from "puppeteer-core";
 
 import { ScriptContext } from "../script/script.context";
 import { ScriptFactory } from "../script/script.factory";
@@ -42,30 +42,39 @@ export abstract class RunnableScript implements Script {
     startup(): void {
         (async () => {
 
-            // listening destroyed
-            this.page.once('close', () => this.destroyed())
 
-            if (this.url && this.url !== '') {
-                // listening load
-                this.page.once('load', () => this.run())
-                // goto the @Runnable's url value
-                await this.page.goto(this.url)
-
-            } else {
-                this.run()
-            }
-            //callback
-            this.created()
-
-            // listening document update
-            this.page.on('request', async req => {
+            // update function
+            var lisenningUpdate = (req: HTTPRequest) => {
                 if (req.resourceType() === 'document') {
                     const waitFor = new WaitForScript(this)
                     waitFor.nextTick('request', () => {
                         this.update()
                     })
                 }
-            })
+            }
+
+            // listening destroyed
+            this.page.once('close', () => this.destroyed())
+
+            if (this.url && this.url !== '') {
+                // listening load
+                this.page.once('load', () => {
+                    this.run()
+                    // listening document update
+                    this.page.on('request', lisenningUpdate)
+                })
+                // goto the @Runnable's url value
+                await this.page.goto(this.url)
+
+            } else {
+                this.run()
+                // listening document update
+                this.page.on('request', lisenningUpdate)
+            }
+            //callback
+            this.created()
+
+
         })()
 
     }
