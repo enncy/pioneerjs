@@ -9,11 +9,12 @@ exports.RUNNABLE_NAME_SYMBOL = Symbol("runnable.name");
  * Runnable decorator, use in  RunnableScript
  * @see RunnableScript
  */
-function Runnable(url) {
-    if (url === void 0) { url = ""; }
+function Runnable(options) {
     return function (constructor) {
-        constructor.prototype.url = url;
-        Reflect.defineMetadata(exports.RUNNABLE_URL_SYMBOL, url, constructor);
+        if (options === null || options === void 0 ? void 0 : options.url) {
+            constructor.prototype.url = options.url;
+            Reflect.defineMetadata(exports.RUNNABLE_URL_SYMBOL, options.url, constructor);
+        }
         Reflect.defineMetadata(exports.RUNNABLE_NAME_SYMBOL, constructor.name, constructor);
         runnableScriptConstructors.push(constructor);
     };

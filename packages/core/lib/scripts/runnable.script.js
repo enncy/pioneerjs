@@ -72,10 +72,18 @@ var RunnableScript = /** @class */ (function () {
                     case 0:
                         lisenningUpdate = function (req) {
                             if (req.resourceType() === 'document') {
-                                var waitFor = new waitfor_script_1.WaitForScript(_this);
-                                waitFor.nextTick('request', function () {
-                                    _this.update();
-                                });
+                                var waitFor_1 = new waitfor_script_1.WaitForScript(_this);
+                                waitFor_1.nextTick('request', function () { return __awaiter(_this, void 0, void 0, function () {
+                                    return __generator(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0: return [4 /*yield*/, waitFor_1.documentReady()];
+                                            case 1:
+                                                _a.sent();
+                                                this.update();
+                                                return [2 /*return*/];
+                                        }
+                                    });
+                                }); });
                             }
                         };
                         // listening destroyed

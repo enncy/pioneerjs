@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import 'reflect-metadata';
 
-const injectableScriptConstructors: any[] = []
+
+export const INJECTABLE_NAME_SYMBOL = Symbol("injectable.name")
 
 /**
  * Injectable decorator, use in  InjectableScript
@@ -9,16 +10,6 @@ const injectableScriptConstructors: any[] = []
  */
 export function Injectable(): ClassDecorator {
     return function (constructor: Function): void {
-        Reflect.defineMetadata("name", constructor.name, constructor)
-        injectableScriptConstructors.push(constructor)
-    }
-}
-
-export class InjectableScriptLoader {
-    static getScriptConstructors(): any[] {
-        return injectableScriptConstructors
-    }
-    static getScriptConstructor(constructor: any): any | undefined {
-        return injectableScriptConstructors.find(i => i.name === constructor.name)
+        Reflect.defineMetadata(INJECTABLE_NAME_SYMBOL, constructor.name, constructor)
     }
 }

@@ -29,11 +29,14 @@
   "bugs": {
     "url": "https://github.com/enncy/pioneerjs/issues"
   },
-  "dependencies": {
-    "@pioneerjs/common": "^0.0.6"
-  },
   "peerDependencies": {
     "@pioneerjs/common": "^0.0.3"
   },
-  "gitHead": "d87be91c7cac6b02f5a8eea3e667851bda16a866"
+  "gitHead": "d87be91c7cac6b02f5a8eea3e667851bda16a866",
+  "devDependencies": {
+    "@pioneerjs/common": "^0.0.6"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
+  }
 }

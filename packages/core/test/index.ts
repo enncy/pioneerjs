@@ -16,7 +16,9 @@ export class Spider extends InjectableScript {
     }
 }
 
-@Runnable("https://baidu.com")
+@Runnable({
+    url:"https://baidu.com"
+})
 export class TestScript extends RunnableScript {
 
     @Inject()

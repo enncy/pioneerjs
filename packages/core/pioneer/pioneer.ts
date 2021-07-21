@@ -1,5 +1,5 @@
 import { Browser, Page, PageEventObject } from "puppeteer-core";
-import { InjectPool, RunnableScriptLoader, RUNNABLE_NAME_SYMBOL } from "@pioneerjs/common";
+import { INJECT_KEYS_SYMBOL, RUNNABLE_NAME_SYMBOL } from "@pioneerjs/common";
 
 
 import { ScriptContext } from "../script/script.context";
@@ -11,8 +11,8 @@ import { ScriptConstructor } from "../scripts/script";
 import { RunnableScript } from "../scripts/runnable.script";
 import { InjectableScript } from "../scripts/injectable.script";
 import { WaitForScript } from "../scripts/waitfor.script";
-
-
+import 'reflect-metadata';
+import { InjectFactory } from "./inject.factory";
 
 /**
  * the appliaction starter
@@ -33,17 +33,13 @@ export class Pioneer {
         this.initPages((pages) => {
             // init runnable script
             const runnableScripts = this.initRunnableScript(pages)
-
-            // init injectable script
-            const injectableScripts = this.initInjectableScript()
+            const injectableScripts = this.initInjectableScript(runnableScripts)
             // start script
             for (const script of runnableScripts) {
                 script.startup()
                 console.log(`[pioneerjs]:script running - ${script.name}`);
             }
-            for (const script of injectableScripts) {
-                console.log(`[pioneerjs]:script injected - ${script.name}`);
-            }
+
         })
     }
 
@@ -75,25 +71,17 @@ export class Pioneer {
      * init injectable script
      * @see initScript()
      */
-    private initInjectableScript(): InjectableScript[] {
+    private initInjectableScript(runnableScripts: RunnableScript[]): InjectableScript[] {
         const scripts: InjectableScript[] = []
-        const injectPool = InjectPool.getInjectPool()
 
-        // inject script
-        for (const inject of injectPool) {
-
-            const target = ScriptFactory.getScript(inject.target.constructor)
-
-            if (target) {
-                const { page, browser, context } = target
-                if (inject.scriptConstructor) {
-                    // get script name
-                    const name = Reflect.getMetadata("name", inject.scriptConstructor)
-                    // create script
-                    const script = new inject.scriptConstructor({ name: `${target.name}.${name}`, page, browser, context })
-                    // inject
-                    Reflect.set(target, inject.propertyKey, script)
-                    scripts.push(script)
+        for (const runableScript of runnableScripts) {
+            const keys = Reflect.getMetadata(INJECT_KEYS_SYMBOL, runableScript)
+            if(keys){
+                for (const key of keys) {
+                    const injectScript = InjectFactory.create(runableScript, key)
+                    scripts.push(injectScript)
+                    Reflect.set(runableScript, key, injectScript)
+                    console.log(`[pioneerjs]:script injected - ${runableScript.name}.${injectScript.name}`);
                 }
             }
         }

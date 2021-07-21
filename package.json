@@ -6,7 +6,8 @@
   "types": "./lib/index.d.ts",
   "scripts": {
     "test": "lerna exec --scope=@pioneerjs/core -- npm run test",
-    "build": " lerna exec -- rd lib /s /q &  lerna run build",
+    "clear": "lerna exec -- rd lib /s /q",
+    "build": "npm run clear &  lerna run build",
     "publish": "lerna publish"
   },
   "author": "enncy",

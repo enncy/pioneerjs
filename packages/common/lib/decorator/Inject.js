@@ -1,10 +1,10 @@
 "use strict";
 /* eslint-disable @typescript-eslint/ban-types */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InjectPool = exports.Inject = void 0;
-var Injectable_1 = require("./Injectable");
+exports.Inject = exports.INJECT_KEYS_SYMBOL = exports.INJECT_NAME_SYMBOL = void 0;
 require("reflect-metadata");
-var injectPool = new Array();
+exports.INJECT_NAME_SYMBOL = Symbol("inject.name");
+exports.INJECT_KEYS_SYMBOL = Symbol("inject.keys");
 /**
   * inject InjectableScript to RunnableScript,
   * only use in RunnableScript,
@@ -30,21 +30,15 @@ var injectPool = new Array();
   */
 function Inject() {
     return function (target, propertyKey) {
-        // get propertyKey type
-        var metadata = Reflect.getMetadata("design:type", target, propertyKey);
-        // get InjectableScript  constructor
-        var scriptConstructor = Injectable_1.InjectableScriptLoader.getScriptConstructor(metadata);
-        // save in pool
-        injectPool.push({ target: target, scriptConstructor: scriptConstructor, propertyKey: propertyKey });
+        Reflect.defineMetadata(exports.INJECT_NAME_SYMBOL, target.constructor.name, target);
+        var keys = Reflect.getMetadata(exports.INJECT_KEYS_SYMBOL, target);
+        if (keys) {
+            keys.push(propertyKey);
+            Reflect.defineMetadata(exports.INJECT_KEYS_SYMBOL, keys, target);
+        }
+        else {
+            Reflect.defineMetadata(exports.INJECT_KEYS_SYMBOL, [propertyKey], target);
+        }
     };
 }
 exports.Inject = Inject;
-var InjectPool = /** @class */ (function () {
-    function InjectPool() {
-    }
-    InjectPool.getInjectPool = function () {
-        return injectPool;
-    };
-    return InjectPool;
-}());
-exports.InjectPool = InjectPool;

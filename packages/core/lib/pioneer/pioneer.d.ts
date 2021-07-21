@@ -1,6 +1,7 @@
 import { Browser, PageEventObject } from "puppeteer-core";
 import { ScriptConstructor } from "../scripts/script";
 import { RunnableScript } from "../scripts/runnable.script";
+import 'reflect-metadata';
 /**
  * the appliaction starter
  *

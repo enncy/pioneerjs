@@ -47,7 +47,8 @@ export abstract class RunnableScript implements Script {
             var lisenningUpdate = (req: HTTPRequest) => {
                 if (req.resourceType() === 'document') {
                     const waitFor = new WaitForScript(this)
-                    waitFor.nextTick('request', () => {
+                    waitFor.nextTick('request', async () => {
+                        await waitFor.documentReady()
                         this.update()
                     })
                 }

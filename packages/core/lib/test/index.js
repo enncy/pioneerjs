@@ -138,7 +138,9 @@ var TestScript = /** @class */ (function (_super) {
         __metadata("design:type", waitfor_script_1.WaitForScript)
     ], TestScript.prototype, "waitFor", void 0);
     TestScript = __decorate([
-        common_1.Runnable("https://baidu.com")
+        common_1.Runnable({
+            url: "https://baidu.com"
+        })
     ], TestScript);
     return TestScript;
 }(__1.RunnableScript));

@@ -32,5 +32,6 @@
   "dependencies": {
     "reflect-metadata": "^0.1.13"
   },
-  "gitHead": "295d45b91b7c9ebac6bda51996538ac123ea5866"
+  "gitHead": "295d45b91b7c9ebac6bda51996538ac123ea5866",
+  "devDependencies": {}
 }

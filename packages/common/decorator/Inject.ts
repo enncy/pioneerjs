@@ -1,19 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
-
-import { InjectableScriptLoader } from "./Injectable";
 import 'reflect-metadata';
 
 
-
-type InjectObjects = {
-    target: Object,
-    propertyKey: string | symbol,
-    scriptConstructor: any | undefined
-}
-
-const injectPool = new Array<InjectObjects>()
-
+export const INJECT_NAME_SYMBOL = Symbol("inject.name")
+export const INJECT_KEYS_SYMBOL = Symbol("inject.keys")
 /**
   * inject InjectableScript to RunnableScript,   
   * only use in RunnableScript,   
@@ -38,22 +29,15 @@ const injectPool = new Array<InjectObjects>()
   * 
   */
 export function Inject(): PropertyDecorator {
+    return function (target: any, propertyKey: string | symbol): void {
+        Reflect.defineMetadata(INJECT_NAME_SYMBOL, target.constructor.name, target)
+        const keys: any[] = Reflect.getMetadata(INJECT_KEYS_SYMBOL, target)
+        if (keys) {
+            keys.push(propertyKey)
+            Reflect.defineMetadata(INJECT_KEYS_SYMBOL, keys, target)
+        } else {
+            Reflect.defineMetadata(INJECT_KEYS_SYMBOL, [propertyKey], target)
+        }
 
-    return function (target: Object, propertyKey: string | symbol): void {
-
-        // get propertyKey type
-        const metadata = Reflect.getMetadata("design:type", target, propertyKey)
-        // get InjectableScript  constructor
-
-        const scriptConstructor = InjectableScriptLoader.getScriptConstructor(metadata)
-        // save in pool
-        injectPool.push({ target, scriptConstructor, propertyKey })
-
-    }
-}
-
-export class InjectPool {
-    static getInjectPool(): Array<InjectObjects> {
-        return injectPool
     }
 }
