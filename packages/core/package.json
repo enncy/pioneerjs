@@ -10,6 +10,8 @@
   "author": "enncy <877526278@qq.com>",
   "homepage": "https://github.com/enncy/pioneerjs/tree/main/packages/core#readme",
   "license": "Apache-2.0",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -24,14 +26,9 @@
   "bugs": {
     "url": "https://github.com/enncy/pioneerjs/issues"
   },
-  "peerDependencies": {
-    "@pioneerjs/common": "^0.0.7"
-  },
   "gitHead": "d87be91c7cac6b02f5a8eea3e667851bda16a866",
-  "devDependencies": {
-    "@pioneerjs/common": "^0.0.7"
-  },
   "dependencies": {
+    "@pioneerjs/common": "^0.0.7",
     "reflect-metadata": "^0.1.13"
   }
 }

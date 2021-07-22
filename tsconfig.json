@@ -70,8 +70,8 @@
   },
   "include": [
     "./packages/**/*","index.ts"
-  ],
+, "sample/1-getting-start/index.ts", "sample/1-getting-start/app.ts"  ],
   "exclude": [
-    "./node_modules","./example","./docs"
+    "./node_modules","sample","./docs"
   ]
 }

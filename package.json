@@ -8,7 +8,6 @@
     "./lib"
   ],
   "scripts": {
-    "test": "lerna exec --scope=@pioneerjs/core -- npm run build && npm run test",
     "build": "lerna run build",
     "publish": "lerna publish"
   },
