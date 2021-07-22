@@ -1,6 +1,6 @@
 "use strict";
 /* eslint-disable @typescript-eslint/ban-types */
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.ScriptFactory = void 0;
 /**
  * create script

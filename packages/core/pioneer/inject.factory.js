@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.InjectFactory = void 0;
 var common_1 = require("@pioneerjs/common");
 var InjectFactory = /** @class */ (function () {

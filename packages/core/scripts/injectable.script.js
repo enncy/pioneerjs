@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.InjectableScript = void 0;
 /**
  *  injectable script, use in runnable script like tool or utils

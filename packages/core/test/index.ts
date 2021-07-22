@@ -17,19 +17,19 @@ export class Spider extends InjectableScript {
 }
 
 @Runnable({
-    url:"https://baidu.com"
+    url: "https://baidu.com"
 })
 export class TestScript extends RunnableScript {
 
     @Inject()
-    private mySpider!: Spider
+    private mySpider!: Spider;
 
     @Inject()
     private waitFor!: WaitForScript
 
     async run(): Promise<void> {
- 
- 
+
+
         console.log(await this.mySpider.getCookie("https://baidu.com")); // <html>...</html>
         console.log("waidForSleep");
         // auto inject you don't need to instance
@@ -51,3 +51,5 @@ export class TestScript extends RunnableScript {
         console.log("update", this.page.url());
     }
 }
+
+ 

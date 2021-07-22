@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.ScriptEventPool = void 0;
 /**
  * listening page event and save page event when browser is launch
@@ -57,7 +57,7 @@ var ScriptEventPool = /** @class */ (function () {
             eventName[_i] = arguments[_i];
         }
         eventName.forEach(function (name) {
-            _this.pool.delete(name);
+            _this.pool["delete"](name);
         });
     };
     /** remove all event */

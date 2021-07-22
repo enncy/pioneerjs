@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.ScriptContext = void 0;
 /** the script context of the pioneerjs
  * - `store` save script value  like localStorage

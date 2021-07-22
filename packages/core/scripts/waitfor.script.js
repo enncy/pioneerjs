@@ -56,7 +56,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 exports.WaitForScript = void 0;
 var common_1 = require("@pioneerjs/common");
 var injectable_script_1 = require("./injectable.script");
