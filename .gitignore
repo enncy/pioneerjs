@@ -3,7 +3,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
 # build
-**/lib/**/*
+**/*.d.ts
+**/*.js
 
 #vscode
 .vscode
