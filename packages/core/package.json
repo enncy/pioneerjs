@@ -25,7 +25,7 @@
     "url": "https://github.com/enncy/pioneerjs/issues"
   },
   "peerDependencies": {
-    "@pioneerjs/common": "^0.0.3"
+    "@pioneerjs/common": "^0.0.7"
   },
   "gitHead": "d87be91c7cac6b02f5a8eea3e667851bda16a866",
   "devDependencies": {
