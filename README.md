@@ -60,7 +60,7 @@ create  `src/index.ts`
 
 import { Pioneer } from "@pioneerjs/core";
 import { launch } from "puppeteer-core";
-import { TestScript } from "./src/index";
+import { TestScript } from "./src/test";
 
 launch({
     // your chrome path
@@ -82,6 +82,7 @@ create `src/script.ts`
 ```typescript
 import { Injectable, Runnable, Inject } from "@pioneerjs/common";
 import { InjectableScript, RunnableScript, WaitForScript } from "@pioneerjs/core";
+import { Protocol } from "puppeteer-core";
 
 // create your new script
 @Injectable()
@@ -92,15 +93,20 @@ export class Spider extends InjectableScript {
     }
 }
 
-// create a new runnable script
-@Runnable("https://baidu.com")
+ /**
+ * create a new runnable script  
+ * @Runnable({url:"https://baidu.com"})  // goto "https://baidu.com"
+ * or
+ * @Runnable()  // do nothing
+ */ 
+@Runnable()
 export class TestScript extends RunnableScript {
 
     @Inject()
-    private mySpider!: Spider
+    private mySpider!: Spider ;
 
     @Inject()
-    private waitFor!: WaitForScript
+    private waitFor!: WaitForScript ;
 
     async run(): Promise<void> {
  
@@ -128,6 +134,7 @@ export class TestScript extends RunnableScript {
 }
 
 ```
+ 
 
 ```bash
 # build your project
@@ -136,3 +143,18 @@ tsc
 node dist/index.js
 ```
 
+out put like this :
+```
+[pioneerjs]:script injected - TestScript.Spider
+[pioneerjs]:script injected - TestScript.WaitForScript
+[pioneerjs]:script running - TestScript
+[
+  xxx
+]
+waidForSleep
+https://www.baidu.com/
+true
+43
+hello word
+update https://www.baidu.com/
+```

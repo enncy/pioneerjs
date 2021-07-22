@@ -12,9 +12,7 @@ export class Spider extends InjectableScript {
 }
 
 // create a new runnable script
-@Runnable({
-    url:"https://baidu.com"
-})
+@Runnable()
 export class TestScript extends RunnableScript {
 
     @Inject()
