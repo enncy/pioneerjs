@@ -57,7 +57,7 @@ export class Pioneer {
                 // create context
                 const context = new ScriptContext(new Store(), new ScriptEventPool(page, this.options.events))
                 // instance
-                const script = ScriptFactory.createScript<RunnableScript>(constructor, { name: constructor.name, page, browser: this.browser, context })
+                const script = ScriptFactory.createScript<RunnableScript>(constructor, { name:constructor.name, page, browser: this.browser, context })
                 // startup
                 scripts.push(script)
             }
@@ -74,7 +74,7 @@ export class Pioneer {
 
         for (const runableScript of runnableScripts) {
             const keys = Reflect.getMetadata(INJECT_KEYS_SYMBOL, runableScript)
-            if (keys) {
+            if(keys){
                 for (const key of keys) {
                     const injectScript = InjectFactory.create(runableScript, key)
                     scripts.push(injectScript)
