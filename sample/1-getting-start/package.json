@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@pioneerjs/common": "0.0.8",
-    "@pioneerjs/core": "0.0.13",
+    "@pioneerjs/core": "0.0.14",
     "puppeteer-core": "^10.1.0"
   }
 }
