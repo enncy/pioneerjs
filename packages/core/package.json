@@ -12,9 +12,7 @@
   "license": "Apache-2.0",
   "main": "index.js",
   "types": "index.d.ts",
-  "files": [
-    "lib"
-  ],
+  
   "publishConfig": {
     "access": "public"
   },
@@ -23,7 +21,7 @@
     "url": "git+https://github.com/enncy/pioneerjs.git"
   },
   "scripts": {
-    "test": "rd lib /s /q && tsc && node ./lib/test/app.js",
+    "test": "tsc && node ./lib/test/app.js",
     "build": "tsc"
   },
   "bugs": {

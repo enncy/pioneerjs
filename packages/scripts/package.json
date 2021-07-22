@@ -11,11 +11,9 @@
   "author": "enncy <877526278@qq.com>",
   "homepage": "https://github.com/enncy/pioneerjs/tree/main/packages/scripts#readme",
   "license": "Apache-2.0",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
-  "files": [
-    "lib"
-  ],
+  "main": "index.js",
+  "types": " index.d.ts",
+ 
   "publishConfig": {
     "access": "public"
   },
