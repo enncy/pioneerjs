@@ -26,13 +26,4 @@ export function Runnable(options: RunnableOptions | undefined): ClassDecorator {
         runnableScriptConstructors.push(constructor)
     }
 }
-
-
-export class RunnableScriptLoader {
-    static getScriptConstructors(): any[] {
-        return runnableScriptConstructors
-    }
-    static getScriptConstructor(constructor: any): any | undefined {
-        return runnableScriptConstructors.find(i => i.name === constructor.name)
-    }
-}
+ 

@@ -1,9 +1,6 @@
 import 'reflect-metadata';
-declare type InjectObjects = {
-    target: Object;
-    propertyKey: string | symbol;
-    scriptConstructor: any | undefined;
-};
+export declare const INJECT_NAME_SYMBOL: unique symbol;
+export declare const INJECT_KEYS_SYMBOL: unique symbol;
 /**
   * inject InjectableScript to RunnableScript,
   * only use in RunnableScript,
@@ -28,7 +25,3 @@ declare type InjectObjects = {
   *
   */
 export declare function Inject(): PropertyDecorator;
-export declare class InjectPool {
-    static getInjectPool(): Array<InjectObjects>;
-}
-export {};

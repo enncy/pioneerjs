@@ -4,10 +4,12 @@
   "description": "pioneerjs - a puppeteer framework",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
+  "files": [
+    "./lib"
+  ],
   "scripts": {
-    "test": "lerna exec --scope=@pioneerjs/core -- npm run test",
-    "clear": "lerna exec -- rd lib /s /q",
-    "build": "npm run clear &  lerna run build",
+    "test": "lerna exec --scope=@pioneerjs/core -- npm run build && npm run test",
+    "build": "lerna run build",
     "publish": "lerna publish"
   },
   "author": "enncy",
