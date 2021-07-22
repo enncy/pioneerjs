@@ -8,7 +8,7 @@
     "./lib"
   ],
   "scripts": {
-    "build": "lerna run build",
+    "build": "tsc && lerna run build",
     "publish": "lerna publish"
   },
   "author": "enncy",
