@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
-import { Page, Browser, HTTPRequest } from "puppeteer-core";
+import { Page, Browser } from "puppeteer-core";
 
 import { ScriptContext } from "../script/script.context";
-import { ScriptFactory } from "../script/script.factory";
 import { Script, ScriptOptions } from "./script";
 
 import { WaitForScript } from "./waitfor.script";
