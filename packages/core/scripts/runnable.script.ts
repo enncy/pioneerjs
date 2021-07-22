@@ -41,47 +41,34 @@ export abstract class RunnableScript implements Script {
     /** called when browser page created*/
     startup(): void {
         (async () => {
+            const waitFor = new WaitForScript(this)
 
-
-            // update function
-            var lisenningUpdate = (req: HTTPRequest) => {
-                if (req.resourceType() === 'document') {
-                    const waitFor = new WaitForScript(this)
-                    waitFor.nextTick('request', async () => {
-                        await waitFor.documentReady()
-                        this.update()
-                    })
-                }
+            var lisenningLoad = async () => {
+                await waitFor.documentReady()
+                this.run()
+                // listening document update
+                this.page.on('load', async () => {
+                    await waitFor.documentReady()
+                    this.update()
+                })
             }
 
             // listening destroyed
             this.page.once('close', () => this.destroyed())
 
             if (this.url && this.url !== '') {
-                // listening load
-                this.page.once('load', () => {
-                    this.run()
-                    // listening document update
-                    this.page.on('request', lisenningUpdate)
-                })
+                // listening first load
+                this.page.once('load', lisenningLoad)
                 // goto the @Runnable's url value
                 await this.page.goto(this.url)
-
             } else {
-                this.run()
-                // listening document update
-                this.page.on('request', lisenningUpdate)
+                lisenningLoad()
             }
-            //callback
-            this.created()
-
 
         })()
 
     }
 
-    /** called when the {@link run()} function is called*/
-    async created(): Promise<void> { }
     /** called when the window load  */
     abstract run(): Promise<void>
     /** called when browser page destroyed*/

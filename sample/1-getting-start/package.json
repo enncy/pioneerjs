@@ -1,0 +1,16 @@
+{
+  "name": "1-getting-start",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && node ./dist/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@pioneerjs/common": "0.0.8",
+    "@pioneerjs/core": "0.0.13",
+    "puppeteer-core": "^10.1.0"
+  }
+}
