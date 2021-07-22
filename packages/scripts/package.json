@@ -1,6 +1,6 @@
 {
   "name": "@pioneerjs/scripts",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "pioneerjs scripts package.",
   "keywords": [
     "pioneerjs",
@@ -11,7 +11,6 @@
   "author": "enncy <877526278@qq.com>",
   "homepage": "https://github.com/enncy/pioneerjs/tree/main/packages/scripts#readme",
   "license": "Apache-2.0",
- 
   "publishConfig": {
     "access": "public"
   },
@@ -27,8 +26,8 @@
     "url": "https://github.com/enncy/pioneerjs/issues"
   },
   "dependencies": {
-    "@pioneerjs/common": "^0.0.6",
-    "@pioneerjs/core": "^0.0.10"
+    "@pioneerjs/common": "^0.0.7",
+    "@pioneerjs/core": "^0.0.11"
   },
   "gitHead": "d87be91c7cac6b02f5a8eea3e667851bda16a866"
 }

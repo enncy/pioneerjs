@@ -1,6 +1,6 @@
 {
   "name": "@pioneerjs/common",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "pioneerjs common package.",
   "keywords": [
     "common",
@@ -10,7 +10,6 @@
   "author": "enncy <877526278@qq.com>",
   "homepage": "https://github.com/enncy/pioneerjs/tree/main/packages/common#readme",
   "license": "Apache-2.0",
- 
   "publishConfig": {
     "access": "public"
   },
@@ -28,6 +27,5 @@
   "dependencies": {
     "reflect-metadata": "^0.1.13"
   },
-  "gitHead": "295d45b91b7c9ebac6bda51996538ac123ea5866",
-  "devDependencies": {}
+  "gitHead": "295d45b91b7c9ebac6bda51996538ac123ea5866"
 }
