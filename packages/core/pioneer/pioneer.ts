@@ -10,7 +10,6 @@ import { Store } from "../script/script.store";
 import { ScriptConstructor } from "../scripts/script";
 import { RunnableScript } from "../scripts/runnable.script";
 import { InjectableScript } from "../scripts/injectable.script";
-import { WaitForScript } from "../scripts/waitfor.script";
 import 'reflect-metadata';
 import { InjectFactory } from "./inject.factory";
 
