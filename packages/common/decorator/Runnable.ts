@@ -4,11 +4,11 @@
 const runnableScriptConstructors: any[] = []
 
 export const RUNNABLE_URL_SYMBOL = Symbol("runnable.url")
-export const RUNNABLE_NAME_SYMBOL = Symbol("runnable.name")
+export const RUNNABLE_OPTIONS_SYMBOL = Symbol("runnable.options")
 export interface RunnableOptions {
     url?: string
 }
- 
+
 /**
  * Runnable decorator, use in  RunnableScript
  * @see RunnableScript
@@ -21,8 +21,7 @@ export function Runnable(options?: RunnableOptions): ClassDecorator {
             Reflect.defineMetadata(RUNNABLE_URL_SYMBOL, options.url, constructor)
         }
 
-        Reflect.defineMetadata(RUNNABLE_NAME_SYMBOL, constructor.name, constructor)
+        Reflect.defineMetadata(RUNNABLE_OPTIONS_SYMBOL, options, constructor)
         runnableScriptConstructors.push(constructor)
     }
 }
- 
