@@ -1,8 +1,7 @@
 {
   "name": "@pioneerjs/scripts",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "pioneerjs scripts package.",
-
   "keywords": [
     "pioneerjs",
     "scripts",
@@ -29,8 +28,8 @@
     "url": "https://github.com/enncy/pioneerjs/issues"
   },
   "dependencies": {
-    "@pioneerjs/common": "^0.0.7",
-    "@pioneerjs/core": "^0.0.12"
+    "@pioneerjs/common": "^0.0.8",
+    "@pioneerjs/core": "^0.0.13"
   },
   "gitHead": "d87be91c7cac6b02f5a8eea3e667851bda16a866"
 }
