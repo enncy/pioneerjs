@@ -26,7 +26,7 @@
   "bugs": {
     "url": "https://github.com/enncy/pioneerjs/issues"
   },
-  "gitHead": "d87be91c7cac6b02f5a8eea3e667851bda16a866",
+  "gitHead": "c5823d0aae9ad900cc8bf2cd1b5543940bd749f8",
   "dependencies": {
     "@pioneerjs/common": "^0.0.10",
     "reflect-metadata": "^0.1.13"
