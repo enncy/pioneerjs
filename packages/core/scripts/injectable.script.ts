@@ -41,7 +41,7 @@ export class InjectableScript implements Script {
         this.browser = browser
         this.context = context
 
-        const waitFor = new WaitForScript(this)
+        const waitFor = new WaitForScript({ page, browser, context, name })
 
         Reflect.ownKeys(this).forEach(key => {
             const eventName = Reflect.getMetadata(EVENT_NAME_SYMBOL, this, key)

@@ -1,0 +1,15 @@
+{
+  "name": "3-event-decorator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && node ./dist/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@pioneerjs/common": "0.0.10",
+    "@pioneerjs/core": "0.0.16"
+  }
+}
