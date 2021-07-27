@@ -2,7 +2,8 @@
 
 import { Page, Browser } from "puppeteer-core";
 
-import { ScriptContext } from "../script/script.context";
+import { ScriptContext } from "../context/script.context";
+import { InjectableScript } from "./injectable.script";
 import { Script, ScriptOptions } from "./script";
 
 import { WaitForScript } from "./waitfor.script";
@@ -22,20 +23,9 @@ import { WaitForScript } from "./waitfor.script";
  * ```
  */
 
-export abstract class RunnableScript implements Script {
+export abstract class RunnableScript extends InjectableScript {
     url?: string
-    name: string;
-    page: Page;
-    browser: Browser;
-    context: ScriptContext;
-
-    constructor({ page, browser, context, name }: ScriptOptions) {
-        this.name = name
-        this.page = page
-        this.browser = browser
-        this.context = context
-    }
-
+ 
 
     /** called when browser page created*/
     startup(): void {

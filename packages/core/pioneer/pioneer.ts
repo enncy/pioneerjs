@@ -1,20 +1,20 @@
 import { Browser, Page, PageEventObject } from "puppeteer-core";
-import { INJECT_KEYS_SYMBOL, RUNNABLE_NAME_SYMBOL } from "@pioneerjs/common";
+import { INJECT_KEYS_SYMBOL } from "@pioneerjs/common";
 
 
-import { ScriptContext } from "../script/script.context";
-import { ScriptEventPool } from "../script/script.event.pool";
-import { ScriptFactory } from "../script/script.factory";
-import { Store } from "../script/script.store";
+import { ScriptContext } from "../context/script.context";
+import { ScriptEventPool } from "../context/script.event.pool";
+import { ScriptFactory } from "./script.factory";
+import { Store } from "../context/script.store";
 
 import { ScriptConstructor } from "../scripts/script";
 import { RunnableScript } from "../scripts/runnable.script";
 import { InjectableScript } from "../scripts/injectable.script";
 import 'reflect-metadata';
-import { InjectFactory } from "./inject.factory";
+
 
 /**
- * the appliaction starter
+ *  appliaction starter
  * 
  */
 export class Pioneer {
@@ -36,7 +36,7 @@ export class Pioneer {
             // start script
             for (const script of runnableScripts) {
                 script.startup()
-                console.log(`[pioneerjs]:script running - ${script.name}`);
+                if (options.log) console.log(`[pioneerjs]:script running - ${script.name}`);
             }
 
         })
@@ -57,7 +57,7 @@ export class Pioneer {
                 // create context
                 const context = new ScriptContext(new Store(), new ScriptEventPool(page, this.options.events))
                 // instance
-                const script = ScriptFactory.createScript<RunnableScript>(constructor, { name:constructor.name, page, browser: this.browser, context })
+                const script = ScriptFactory.createRunnableScript(constructor, { name: constructor.name, page, browser: this.browser, context })
                 // startup
                 scripts.push(script)
             }
@@ -74,12 +74,12 @@ export class Pioneer {
 
         for (const runableScript of runnableScripts) {
             const keys = Reflect.getMetadata(INJECT_KEYS_SYMBOL, runableScript)
-            if(keys){
+            if (keys) {
                 for (const key of keys) {
-                    const injectScript = InjectFactory.create(runableScript, key)
+                    const injectScript = ScriptFactory.createInjectableScript(runableScript, key)
                     scripts.push(injectScript)
                     Reflect.set(runableScript, key, injectScript)
-                    console.log(`[pioneerjs]:script injected - ${runableScript.name}.${injectScript.name}`);
+                    if (this.options.log) console.log(`[pioneerjs]:script injected - ${runableScript.name}.${injectScript.name}`);
                 }
             }
         }

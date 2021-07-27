@@ -1,4 +1,4 @@
-import {  PageEventObject } from "puppeteer-core";
+import { PageEventObject } from "puppeteer-core";
 
 type PageEventObjects = PageEventObject[keyof PageEventObject]
 type PageEventObjectKey = keyof PageEventObject
@@ -6,7 +6,7 @@ type PageEventObjectKey = keyof PageEventObject
 export interface EventPool {
 
     /** add event listener, and save event to eventpool*/
-    on(eventName: PageEventObjectKey): void
+    on(eventName: PageEventObjectKey, handler?: (event: PageEventObjects) => void): void
 
     /** remove event listener */
     off(eventName: PageEventObjectKey): void

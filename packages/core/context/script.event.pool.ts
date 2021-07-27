@@ -28,20 +28,20 @@ export class ScriptEventPool implements EventPool {
     constructor(page: Page, eventNames?: PageEventObjectKey[]) {
         this.page = page
         this.pool = new Map()
-        eventNames?.forEach(name => this.on(name))
+        eventNames?.forEach(name => this.on(name, (event: PageEventObjects) => {
+            const pool = this.pool.get(name)
+            if (pool) {
+                pool.push(event)
+                this.pool.set(name, pool)
+            } else {
+                this.pool.set(name, [event])
+            }
+        }))
     }
 
     /** add event listener, and save event to eventpool*/
-    public on(eventName: PageEventObjectKey): EventEmitter {
-        return this.page.on(eventName, (event: PageEventObjects) => {
-            const pool = this.pool.get(eventName)
-            if (pool) {
-                pool.push(event)
-                this.pool.set(eventName, pool)
-            } else {
-                this.pool.set(eventName, [event])
-            }
-        })
+    public on(eventName: PageEventObjectKey, handler: (event: PageEventObjects) => void): EventEmitter {
+        return this.page.on(eventName, handler)
     }
 
     /** remove event listener */

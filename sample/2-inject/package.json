@@ -1,0 +1,15 @@
+{
+  "name": "2-inject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && node ./dist/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@pioneerjs/common": "0.0.9",
+    "@pioneerjs/core": "0.0.15"
+  }
+}
