@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
-import { Page, Browser } from "puppeteer-core";
+import { EventOptions, EVENT_NAME_SYMBOL, EVENT_OPTIONS_SYMBOL } from "@pioneerjs/common";
 
-import { ScriptContext } from "../context/script.context";
 import { InjectableScript } from "./injectable.script";
-import { Script, ScriptOptions } from "./script";
 
 import { WaitForScript } from "./waitfor.script";
-
+import 'reflect-metadata';
 /**
  * runnable script , use @Runnable to decorator   
  * example : 
@@ -25,12 +23,26 @@ import { WaitForScript } from "./waitfor.script";
 
 export abstract class RunnableScript extends InjectableScript {
     url?: string
- 
+
 
     /** called when browser page created*/
     startup(): void {
         (async () => {
             const waitFor = new WaitForScript(this)
+
+            // execute event decorator
+            Reflect.ownKeys(this).forEach(key => {
+                const eventName = Reflect.getMetadata(EVENT_NAME_SYMBOL, this, key)
+                const eventOptions: EventOptions = Reflect.getMetadata(EVENT_OPTIONS_SYMBOL, this, key)
+                if (eventName) {
+                    this.context.eventPool.on(eventName, async (event) => {
+                        if (eventOptions.waitForLoad) {
+                            await waitFor.documentReady()
+                        }
+                        this[(key as string)](event)
+                    })
+                }
+            })
 
             var lisenningLoad = async () => {
                 await waitFor.documentReady()

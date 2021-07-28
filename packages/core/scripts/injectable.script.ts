@@ -3,11 +3,7 @@ import { Browser, Page } from "puppeteer-core";
 
 import { ScriptContext } from "../context/script.context";
 import { Script, ScriptOptions } from "./script";
-import 'reflect-metadata';
-import { EventOptions, EVENT_NAME_SYMBOL, EVENT_OPTIONS_SYMBOL } from "@pioneerjs/common";
-import { WaitForScript } from "./waitfor.script";
-
-
+ 
 
 /**
  *  injectable script, use in runnable script like tool or utils     
@@ -40,23 +36,6 @@ export class InjectableScript implements Script {
         this.page = page
         this.browser = browser
         this.context = context
-
-
-
-        Reflect.ownKeys(this).forEach(key => {
-            const eventName = Reflect.getMetadata(EVENT_NAME_SYMBOL, this, key)
-            const eventOptions: EventOptions = Reflect.getMetadata(EVENT_OPTIONS_SYMBOL, this, key)
-            if (eventName) {
-                this.context.eventPool.on(eventName, async (event) => {
-                    if (eventOptions.waitForLoad) {
-                        const waitFor = new WaitForScript(this)
-                        await waitFor.documentReady()
-                    }
-                    this[(key as string)](event)
-                })
-            }
-        })
-
     }
 
 
