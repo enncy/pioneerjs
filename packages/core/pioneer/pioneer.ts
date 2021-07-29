@@ -11,6 +11,36 @@ import { ScriptConstructor } from "../scripts/script";
 import { RunnableScript } from "../scripts/runnable.script";
 import { InjectableScript } from "../scripts/injectable.script";
 import 'reflect-metadata';
+import { DecoratorHandler } from "./decorator.handler";
+import { PioneerProxy, MethodProxy } from "./proxy";
+
+ 
+
+export interface StartupOptions {
+    /**
+     * target method proxy 
+     * 
+     * ```
+     * // example
+     * const pioneer = Pioneer.create(...)
+     * pioneer.startup({
+     *     methodProxy:{
+     *         page:{
+     *              keys:['goto'],
+     *              handler(target:any,key:any){
+     *                 console.log(`target method-${key}() is called`)
+     *                 // target method-goto() is called
+     *                 return Reflect.get(target, key, receiver);
+     *              }
+     *         }
+     *     }
+     *  
+     * })
+     * ```
+     * @see https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy
+     */
+    methodProxy?: MethodProxy
+}
 
 
 /**
@@ -20,26 +50,50 @@ import 'reflect-metadata';
 export class Pioneer {
 
     private browser: Browser
-    private options: PioneerOptioins
+    private options?: PioneerOptioins
 
+    public runnableScripts?: RunnableScript[];
+    public injectableScripts?: InjectableScript[];
 
-    constructor(browser: Browser, options: PioneerOptioins) {
-
+    constructor(browser: Browser) {
         this.browser = browser
-        this.options = options
+    }
+
+    private async init(methodProxy?: MethodProxy): Promise<void> {
 
         // create pages 
-        this.initPages((pages) => {
-            // init runnable script
-            const runnableScripts = this.initRunnableScript(pages)
-            const injectableScripts = this.initInjectableScript(runnableScripts)
-            // start script
-            for (const script of runnableScripts) {
-                script.startup()
-                if (options.log) console.log(`[pioneerjs]:script running - ${script.name}`);
-            }
+        let pages = await this.initPages()
+        // page proxy
+        pages = pages.map(p => PioneerProxy.methodProxy(p, methodProxy?.page))
+        // init runnable script
+        this.runnableScripts = this.initRunnableScript(pages)
+        this.injectableScripts = this.initInjectableScript(this.runnableScripts)
 
-        })
+
+        // script proxy
+        this.runnableScripts = this.runnableScripts.map(s => PioneerProxy.methodProxy(s, methodProxy?.runnableScript))
+        // run event decorator
+        DecoratorHandler.handleEventDecorators([...this.runnableScripts, ...this.injectableScripts])
+
+    }
+
+    /**
+     *  run script
+     * @param options 
+     */
+    public async startup({ scripts, events, log, methodProxy }: PioneerOptioins & StartupOptions): Promise<void> {
+        this.options = { scripts, events, log }
+
+        await this.init(methodProxy)
+
+        if (this.runnableScripts) {
+            // start script
+            for (const script of this.runnableScripts) {
+                script.startup()
+                if (this.options.log) console.log(`[pioneerjs]:script running - ${script.name}`);
+            }
+        }
+
     }
 
     /**
@@ -48,14 +102,17 @@ export class Pioneer {
      */
     private initRunnableScript(pages: Page[]): RunnableScript[] {
         const scripts: RunnableScript[] = []
-        const constructors = this.options.scripts
+        const constructors = this.options?.scripts
+        if (constructors === undefined) {
+            throw new Error("There is no runnable script in pioneer startup()")
+        }
 
         for (const constructor of constructors) {
 
             const page = pages.shift()
             if (page) {
                 // create context
-                const context = new ScriptContext(new Store(), new ScriptEventPool(page, this.options.events))
+                const context = new ScriptContext(new Store(), new ScriptEventPool(page, this.options?.events))
                 // instance
                 const script = ScriptFactory.createRunnableScript(constructor, { name: constructor.name, page, browser: this.browser, context })
                 // startup
@@ -79,7 +136,7 @@ export class Pioneer {
                     const injectScript = ScriptFactory.createInjectableScript(runableScript, key)
                     scripts.push(injectScript)
                     Reflect.set(runableScript, key, injectScript)
-                    if (this.options.log) console.log(`[pioneerjs]:script injected - ${runableScript.name}.${injectScript.name}`);
+                    if (this.options?.log) console.log(`[pioneerjs]:script injected - ${runableScript.name}.${injectScript.name}`);
                 }
             }
         }
@@ -87,22 +144,25 @@ export class Pioneer {
     }
 
     /** create pages  */
-    private async initPages(callback: (pages: Page[]) => void): Promise<Page[]> {
+    private async initPages(callback?: (pages: Page[]) => void): Promise<Page[]> {
         const pages: Page[] = await this.browser.pages()
-        let constructors = this.options.scripts
+        let constructors = this.options?.scripts
+        if (constructors === undefined) {
+            throw new Error("There is no runnable script in pioneer startup()")
+        }
         // remove RunnableScript
         constructors = constructors.filter(i => i.name !== RunnableScript.name)
         // start in one, because browser launch start with one bage
         for (let i = 1; i < constructors.length; i++) {
             pages.push(await this.browser.newPage())
         }
-        callback(pages)
+        callback?.(pages)
         return pages
     }
 
     /** static instance function */
-    static create(browser: Browser, options: PioneerOptioins): Pioneer {
-        return new Pioneer(browser, options)
+    static create(browser: Browser): Pioneer {
+        return new Pioneer(browser)
     }
 
 }

@@ -1,4 +1,4 @@
 
 
-export { Sniffer } from "./sniff/sniffer.script";
+export { Spider } from "./src/spider";
  

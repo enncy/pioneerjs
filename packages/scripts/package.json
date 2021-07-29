@@ -13,6 +13,9 @@
   "license": "Apache-2.0",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
+  "files": [
+    "./lib"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -22,14 +25,18 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "publish:patch": "npm run build && npm verison patch && npm publish",
+    "publish:minor": "npm run build && npm verison minor && npm publish",
+    "publish:major": "npm run build && npm verison major && npm publish"
   },
   "bugs": {
     "url": "https://github.com/enncy/pioneerjs/issues"
   },
   "dependencies": {
     "@pioneerjs/common": "^0.0.10",
-    "@pioneerjs/core": "^0.0.17"
+    "@pioneerjs/core": "^0.0.19",
+    "axios": "^0.21.1"
   },
-  "gitHead": "d87be91c7cac6b02f5a8eea3e667851bda16a866"
+  "gitHead": "c5823d0aae9ad900cc8bf2cd1b5543940bd749f8"
 }

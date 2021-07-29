@@ -1,6 +1,6 @@
 {
   "name": "@pioneerjs/core",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "the core of pioneerjs",
   "keywords": [
     "core",
@@ -12,6 +12,9 @@
   "license": "Apache-2.0",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
+  "files": [
+    "./lib"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -21,7 +24,10 @@
   },
   "scripts": {
     "test": "tsc && node ./lib/test/app.js",
-    "build": "tsc"
+    "build": "tsc",
+    "publish:patch": "npm run build && npm verison patch && npm publish",
+    "publish:minor": "npm run build && npm verison minor && npm publish",
+    "publish:major": "npm run build && npm verison major && npm publish"
   },
   "bugs": {
     "url": "https://github.com/enncy/pioneerjs/issues"

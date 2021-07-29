@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "@pioneerjs/common": "0.0.10",
-    "@pioneerjs/core": "0.0.16"
+    "@pioneerjs/core": "0.0.19"
   }
 }

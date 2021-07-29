@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
-import { EventOptions, EVENT_NAME_SYMBOL, EVENT_OPTIONS_SYMBOL } from "@pioneerjs/common";
 
 import { InjectableScript } from "./injectable.script";
 
@@ -21,6 +20,16 @@ import 'reflect-metadata';
  * ```
  */
 
+export interface RunnableScript {
+    url?: string
+    /** called when browser page created*/
+    startup(): void
+    /** called when browser page destroyed*/
+    update(): Promise<void>
+    /** called when browser page destroyed*/
+    destroyed(): Promise<void>
+}
+
 export abstract class RunnableScript extends InjectableScript {
     url?: string
 
@@ -29,20 +38,6 @@ export abstract class RunnableScript extends InjectableScript {
     startup(): void {
         (async () => {
             const waitFor = new WaitForScript(this)
-
-            // execute event decorator
-            Reflect.ownKeys(this).forEach(key => {
-                const eventName = Reflect.getMetadata(EVENT_NAME_SYMBOL, this, key)
-                const eventOptions: EventOptions = Reflect.getMetadata(EVENT_OPTIONS_SYMBOL, this, key)
-                if (eventName) {
-                    this.context.eventPool.on(eventName, async (event) => {
-                        if (eventOptions.waitForLoad) {
-                            await waitFor.documentReady()
-                        }
-                        this[(key as string)](event)
-                    })
-                }
-            })
 
             var lisenningLoad = async () => {
                 await waitFor.documentReady()

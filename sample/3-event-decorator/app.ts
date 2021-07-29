@@ -1,5 +1,6 @@
 import { Pioneer } from "@pioneerjs/core";
 import { launch } from "puppeteer-core";
+import { EventScript } from "./src";
  
  
 
@@ -11,7 +12,7 @@ launch({
 }).then(async browser => {
 
     Pioneer.create(browser, {
-        scripts: [ ],
+        scripts: [EventScript],
         events: ['request']
     })
 

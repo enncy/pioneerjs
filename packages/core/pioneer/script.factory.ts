@@ -2,17 +2,14 @@
 
 
 import { INJECTABLE_NAME_SYMBOL } from "@pioneerjs/common"
-import { InjectableScript } from "../scripts/injectable.script"
-import { RunnableScript } from "../scripts/runnable.script"
-import { Script, ScriptConstructor, ScriptOptions } from "../scripts/script"
-import { WaitForScript } from "../scripts/waitfor.script"
-
-
+import { InjectableScript, RunnableScript, Script, ScriptConstructor, ScriptOptions, Utils, WaitForScript } from "../scripts"
+ 
 export interface NativeScripts {
     waitForScript: WaitForScript
     script: Script
     runnableScript: RunnableScript,
-    InjectableScript: InjectableScript
+    InjectableScript: InjectableScript,
+    utils: Utils
 }
 
 /**

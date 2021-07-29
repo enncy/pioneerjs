@@ -3,7 +3,6 @@ import { Browser, Page } from "puppeteer-core";
 
 import { ScriptContext } from "../context/script.context";
 import { Script, ScriptOptions } from "./script";
- 
 
 /**
  *  injectable script, use in runnable script like tool or utils     
@@ -29,7 +28,6 @@ export class InjectableScript implements Script {
     page: Page;
     browser: Browser;
     context: ScriptContext;
-    [x: string]: any
 
     constructor({ page, browser, context, name }: Script | ScriptOptions) {
         this.name = name
@@ -41,4 +39,5 @@ export class InjectableScript implements Script {
 
 
 }
+
 

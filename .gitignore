@@ -6,6 +6,9 @@
 **/*.d.ts
 **/*.js
 
+# test
+test/
+
 #vscode
 .vscode
 

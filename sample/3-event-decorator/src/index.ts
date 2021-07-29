@@ -10,11 +10,11 @@ export class EventScript extends RunnableScript {
         console.log("run");
     }
 
-    @Event({ name: 'console' })
-    load(event: PageEventObject['console']) {
-        console.log("event", event);
-
+    @Event({ name: 'request' })
+    load(event: PageEventObject['request']) {
+        console.log("event", event.url());
     }
+
 
 }
 

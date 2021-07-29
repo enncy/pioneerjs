@@ -8,10 +8,11 @@
     "./lib"
   ],
   "scripts": {
+    "test": " lerna run test --scope=@pioneerjs/core",
     "build": "tsc && lerna run build",
-    "build:common":"lerna run build --scope=@pioneerjs/common",
-    "build:core":"lerna run build --scope=@pioneerjs/core",
-    "build:script":"lerna run build --scope=@pioneerjs/script",
+    "build:common": "lerna run build --scope=@pioneerjs/common",
+    "build:core": "lerna run build --scope=@pioneerjs/core",
+    "build:script": "lerna run build --scope=@pioneerjs/script",
     "publish": "lerna publish"
   },
   "author": "enncy",

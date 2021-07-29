@@ -6,6 +6,7 @@ export interface Script {
     page: Page
     browser: Browser
     context: ScriptContext
+    [x: string]: any
 }
 
 
@@ -19,3 +20,5 @@ export interface ScriptOptions {
 export interface ScriptConstructor<T extends Script> {
     new(options: ScriptOptions): T
 }
+
+
