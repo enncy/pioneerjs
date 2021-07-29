@@ -14,7 +14,7 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
-    "./lib"
+    "lib"
   ],
   "publishConfig": {
     "access": "public"
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@pioneerjs/common": "^1.0.0",
-    "@pioneerjs/core": "^1.0.0",
+    "@pioneerjs/core": "^1.0.1",
     "axios": "^0.21.1"
   },
   "gitHead": "c5823d0aae9ad900cc8bf2cd1b5543940bd749f8"
