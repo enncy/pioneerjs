@@ -54,31 +54,33 @@ tsc --init
 
 
 
-create  `src/index.ts`
+create  `app.ts`
 
 ```typescript
 
-import { Pioneer } from "@pioneerjs/core";
-import { launch } from "puppeteer-core";
+
+import { PioneerFactory } from "@pioneerjs/core";
 import { TestScript } from "./src/test";
 
-launch({
+
+PioneerFactory.launch({
     // your chrome path
     executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
     defaultViewport: null,
     headless: false,
-}).then(async browser => {
+}).then(async pioneer => {
 
-    Pioneer.create(browser, {
+    pioneer.startup({
         scripts: [TestScript],
         events: ['request']
     })
+})
 
-});
+
 ```
 
 
-create `src/script.ts`
+create `src/test.ts`
 ```typescript
 import { Injectable, Runnable, Inject } from "@pioneerjs/common";
 import { InjectableScript, RunnableScript, WaitForScript } from "@pioneerjs/core";
@@ -134,7 +136,7 @@ export class TestScript extends RunnableScript {
 }
 
 ```
- 
+
 
 ```bash
 # build your project

@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@pioneerjs/common": "0.0.9",
-    "@pioneerjs/core": "0.0.15",
+    "@pioneerjs/common": "1.0.1",
+    "@pioneerjs/core": "1.0.2",
     "puppeteer-core": "^10.1.0"
   }
 }
