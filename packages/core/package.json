@@ -1,6 +1,6 @@
 {
   "name": "@pioneerjs/core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "the core of pioneerjs",
   "keywords": [
     "core",
@@ -34,7 +34,7 @@
   },
   "gitHead": "c5823d0aae9ad900cc8bf2cd1b5543940bd749f8",
   "dependencies": {
-    "@pioneerjs/common": "^1.0.1",
+    "@pioneerjs/common": "^1.0.2",
     "reflect-metadata": "^0.1.13"
   }
 }
