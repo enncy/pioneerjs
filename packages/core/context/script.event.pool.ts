@@ -22,7 +22,7 @@ type PageEventObjectKey = keyof PageEventObject
 export class ScriptEventPool implements EventPool {
 
     private page: Page;
-    private pool: Map<PageEventObjectKey, PageEventObjects[]>
+    private pool: Map<string, any[]>
 
 
     constructor(page: Page, eventNames?: PageEventObjectKey[]) {
@@ -36,27 +36,27 @@ export class ScriptEventPool implements EventPool {
     }
 
     /** add event listener, and save event to eventpool*/
-    public on(eventName: PageEventObjectKey, handler: (event: PageEventObjects) => void): EventEmitter {
+    public on<T extends keyof PageEventObject>(eventName: T, handler: (event: PageEventObject[T]) => void): EventEmitter {
         return this.page.on(eventName, handler)
     }
 
     /** remove event listener */
-    public off(eventName: PageEventObjectKey): EventEmitter {
+    public off<T extends keyof PageEventObject>(eventName: T): EventEmitter {
         return this.page.removeAllListeners(eventName)
     }
 
     /** get eventpool */
-    public getEvents(eventName: PageEventObjectKey): PageEventObjects[] | undefined {
+    public getEvents<T extends keyof PageEventObject>(eventName: T): PageEventObject[T][] | undefined {
         return this.pool.get(eventName)
     }
 
     /** set eventpool */
-    public setEvents(eventName: PageEventObjectKey, value: PageEventObjects[]): void {
+    public setEvents<T extends keyof PageEventObject>(eventName: T, value: PageEventObject[T][]): void {
         this.pool.set(eventName, value)
     }
 
     /** remove events, if you want to remove all the events, use {@link ScriptEventPool.removeAllEvents()} */
-    public removeEvents(...eventName: PageEventObjectKey[]): void {
+    public removeEvents<T extends keyof PageEventObject>(...eventName: T[]): void {
         eventName.forEach(name => {
             this.pool.delete(name)
         })

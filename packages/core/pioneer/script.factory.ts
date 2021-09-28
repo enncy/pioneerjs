@@ -1,3 +1,4 @@
+import { RUNNABLE_NAME_SYMBOL } from './../../common/decorator/runnable';
 /* eslint-disable @typescript-eslint/ban-types */
 
 
@@ -22,7 +23,7 @@ export class ScriptFactory {
      * @param propertyKey property key of  target class 
      */
     public static createInjectableScript<T extends InjectableScript>(target: T, propertyKey: string | symbol): any {
-        // get propertyKey type
+        // get propertyKey type = injectable property
 
         const constructor = Reflect.getMetadata("design:type", target, propertyKey)
         // only has @Injectable Function can use @Inject
@@ -36,8 +37,10 @@ export class ScriptFactory {
         return injectTarget
     }
 
-    public static createRunnableScript(constractor: ScriptConstructor<RunnableScript>, options: ScriptOptions) {
-        return new constractor(options)
+    public static createRunnableScript(constructor: ScriptConstructor<RunnableScript>, options: ScriptOptions) {
+        
+        options.name = Reflect.getMetadata(RUNNABLE_NAME_SYMBOL, constructor) || options.name
+        return new constructor(options)
     }
 
 }
