@@ -1,8 +1,8 @@
-import { RUNNABLE_NAME_SYMBOL } from './../../common/decorator/runnable';
+ 
 /* eslint-disable @typescript-eslint/ban-types */
 
 
-import { INJECTABLE_NAME_SYMBOL } from "@pioneerjs/common"
+import { INJECTABLE_NAME_SYMBOL , RUNNABLE_NAME_SYMBOL } from "@pioneerjs/common"
 import { InjectableScript, RunnableScript, Script, ScriptConstructor, ScriptOptions, Utils, WaitForScript } from "../scripts"
  
 export interface NativeScripts {

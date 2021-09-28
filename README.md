@@ -74,6 +74,16 @@ PioneerFactory.launch({
         scripts: [TestScript],
         events: ['request']
     })
+
+    // or you can find script by name
+
+    const { runnanleScripts } =   await pioneer.startup({
+        scripts: [TestScript],
+        events: ['request']
+    })
+
+    runnanleScripts?.find(s=>s.name="TestScript").run()
+
 })
 
 
