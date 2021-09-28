@@ -170,7 +170,7 @@ export class Pioneer {
 export interface PioneerOptioins {
     scripts: ScriptConstructor<RunnableScript>[]
     /** some events `keyof PageEventObject`  you want to catch in chrome page*/
-    events?: [keyof PageEventObject],
+    events?: (keyof PageEventObject)[],
     /** is open the running log */
     log?: boolean,
 }
