@@ -1,3 +1,4 @@
+import { EventEmitter } from "events";
 import { Browser, Page } from "puppeteer-core";
 
 
@@ -23,13 +24,14 @@ import { Script, ScriptOptions } from "./script";
  * }
  * ```
  */
-export class InjectableScript implements Script {
+export class InjectableScript extends EventEmitter implements Script  {
     name: string;
     page: Page;
     browser: Browser;
     context: ScriptContext;
 
     constructor({ page, browser, context, name }: Script | ScriptOptions) {
+        super();
         this.name = name
         this.page = page
         this.browser = browser
